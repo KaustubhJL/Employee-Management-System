@@ -36,13 +36,13 @@ public class CrudAppMain {
         Employee loggedInEmployee = ops.findEmp(loggedInId);
 
         if (loggedInEmployee.getRole().contains("Admin")) {
-            AdminCruds.showMenu(ops, sc, mapper, file);
+            AdminMenu.showMenu(ops, sc, mapper, file);
         } 
         else if (loggedInEmployee.getRole().contains("Manager")) {
-            ManagerCruds.start(ops, sc, mapper, file);
+            ManagerMenu.showMenu(ops, sc, mapper, file);
         } 
         else {
-            EmployeeCruds.start(ops, sc);
+            EmployeeMenu.showMenu(ops, sc);
         }
 
         sc.close();

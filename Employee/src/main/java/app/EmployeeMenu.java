@@ -6,9 +6,9 @@ import operations.ShowEmployee;
 import operations.UpdateAddress;
 import operations.LoginAndPassword;
 
-public class EmployeeCruds {
-
-    public static void start(Manage ops, Scanner sc) throws Exception {
+public class EmployeeMenu {
+	
+    public static void showMenu(Manage ops, Scanner sc) throws Exception {
 
         EmployeeChoices choice=null;
 

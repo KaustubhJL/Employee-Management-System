@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import manager.Manage;
 import operations.*;
 
-public class ManagerCruds {
+public class ManagerMenu {
 
-    public static void start(Manage ops, Scanner sc,
+    public static void showMenu(Manage ops, Scanner sc,
                              ObjectMapper mapper, File file) throws Exception {
 
         ManagerChoices choice = null;

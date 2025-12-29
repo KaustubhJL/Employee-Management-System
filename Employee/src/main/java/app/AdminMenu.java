@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import manager.Manage;
 import operations.*;
 
-public class AdminCruds {
+public class AdminMenu {
 
     public static void showMenu(Manage ops, Scanner sc,
                              ObjectMapper mapper, File file) throws Exception {
