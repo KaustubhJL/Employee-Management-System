@@ -3,7 +3,7 @@ package operations;
 //import java.util.ArrayList;
 import java.util.Scanner;
 
-import manager.Manage;
+import controller.Manage;
 
 public class UpdateAll {
 	public static void updateAll(Manage ops, Scanner sc, String id)throws Exception{

@@ -1,6 +1,5 @@
 package operations;
 
-import modelconstructor.Employee;
 //import java.util.List;
 import java.util.Scanner;
 //import java.io.File;
@@ -9,9 +8,10 @@ import java.nio.charset.StandardCharsets;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.hash.Hashing;
 
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
-import manager.Manage;
+import controller.Manage;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import model.EmployeeConstructor;
 
 public class LoginAndPassword {
     private static String loggedInID = null;
@@ -22,7 +22,7 @@ public class LoginAndPassword {
                 .hashString(pass, StandardCharsets.UTF_8)
                 .toString();
        
-        for (Employee e : ops.getEmployees()) {
+        for (EmployeeConstructor e : ops.getEmployees()) {
             if (e.getId().equals(empID)){
             	if(e.getPassword().equals(hashedPass)) {
                 	loggedInID = empID;

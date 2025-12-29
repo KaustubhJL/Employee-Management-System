@@ -1,9 +1,10 @@
-package app;
+package main;
 
 import java.io.File;
 import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import manager.Manage;
+
+import controller.Manage;
 import operations.*;
 
 public class AdminMenu {
@@ -33,16 +34,19 @@ public class AdminMenu {
                 case ADD:
                     AddEmployee.add(ops, sc);
                     SaveEmployeesToFile.saveToJson(ops, mapper, file);
+                    //CreateAuditLogs.auditLogs(mapper,"Add employee");
                     break;
 
                 case UPDATE:
                     UpdateEmployee.update(ops, sc);
                     SaveEmployeesToFile.saveToJson(ops, mapper, file);
+//                    CreateAuditLogs.auditLogs(mapper,"Update Employee Details");
                     break;
 
                 case DELETE:
                     DeleteEmployee.delete(ops, sc);
                     SaveEmployeesToFile.saveToJson(ops, mapper, file);
+                    //CreateAuditLogs.auditLogs(mapper,"Deelet Employee Details");
                     break;
 
                 case SHOW:

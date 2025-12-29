@@ -1,4 +1,4 @@
-package app;
+package main;
 
 public enum EmployeeChoices {
     SHOW_SELF,

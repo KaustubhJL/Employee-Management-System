@@ -1,11 +1,12 @@
-package crudinterface;
-import exceptions.EmployeeNotFoundException;
+package model;
 //import manager.Manage;
 import java.util.ArrayList;
-import exceptions.IdFormatWrongException;
-import exceptions.InvalidDataException;
 
-public interface Cruds{
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import customExceptions.InvalidDataException;
+
+public interface CrudInterface{
 	void add(String name, String mail, String address, String department, ArrayList<String> role, String password ) throws InvalidDataException;
 	void delete(String id) throws EmployeeNotFoundException,IdFormatWrongException;
 //	void updateAll(String id, String name, String mail, String address, String department, ArrayList<String> role) throws EmployeeNotFoundException, IdFormatWrongException;

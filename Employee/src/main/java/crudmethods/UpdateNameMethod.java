@@ -1,12 +1,13 @@
 package crudmethods;
 import java.util.ArrayList;
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
-import modelconstructor.Employee;
+
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import model.EmployeeConstructor;
 
 
 public class UpdateNameMethod {
-	public static void updateName(ArrayList<Employee> al, Employee em, String id, String name)throws EmployeeNotFoundException,IdFormatWrongException {
+	public static void updateName(ArrayList<EmployeeConstructor> al, EmployeeConstructor em, String id, String name)throws EmployeeNotFoundException,IdFormatWrongException {
 		if (em == null) {
             throw new EmployeeNotFoundException("Employee with Id: "+id + " not found.");
         }

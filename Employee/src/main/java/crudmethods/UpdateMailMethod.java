@@ -1,13 +1,14 @@
 package crudmethods;
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
-//import manager.Manage;
-import modelconstructor.Employee;
+import model.EmployeeConstructor;
+
 import java.util.ArrayList;
 //import java.util.Scanner;
 
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+
 public class UpdateMailMethod {
-	public static void updateMail (ArrayList<Employee>al, Employee em,String id, String mail) throws EmployeeNotFoundException,IdFormatWrongException{
+	public static void updateMail (ArrayList<EmployeeConstructor>al, EmployeeConstructor em,String id, String mail) throws EmployeeNotFoundException,IdFormatWrongException{
 		if (em == null) {
             throw new EmployeeNotFoundException("Employee with Id: "+id + " not found.");
         }

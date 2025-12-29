@@ -1,8 +1,9 @@
 package operations;
 import java.util.*;
-import manager.Manage;
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
+
+import controller.Manage;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
 public class DeleteEmployee {
 	public static void delete(Manage ops,Scanner sc) {
 		

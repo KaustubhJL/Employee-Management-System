@@ -1,7 +1,8 @@
-package app;
+package main;
 import java.util.Scanner;
+
+import controller.Manage;
 import operations.UpdateMail;
-import manager.Manage;
 import operations.ShowEmployee;
 import operations.UpdateAddress;
 import operations.LoginAndPassword;

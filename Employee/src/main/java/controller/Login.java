@@ -1,14 +1,11 @@
-package checkaccess;
+package controller;
 
 import java.util.Scanner;
-
-import manager.Manage;
-
 import java.io.Console;
 import java.util.Arrays;
 import operations.LoginAndPassword;
 
-public class accesscheck {
+public class Login {
 
     public static void authenticate(Manage ops,Scanner sc) {
         Console console = System.console();

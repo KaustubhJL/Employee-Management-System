@@ -1,12 +1,13 @@
 package crudmethods;
 import java.util.ArrayList;
-import exceptions.IdFormatWrongException;
-import modelconstructor.Employee;
-import exceptions.EmployeeNotFoundException;
+
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import model.EmployeeConstructor;
 
 
 public class DeleteMethod {
-	public static void delete(ArrayList<Employee> al, Employee em,String id) throws EmployeeNotFoundException, IdFormatWrongException {
+	public static void delete(ArrayList<EmployeeConstructor> al, EmployeeConstructor em,String id) throws EmployeeNotFoundException, IdFormatWrongException {
 		if (em == null) {
             throw new EmployeeNotFoundException("Employee with Id: "+id + " not found.");
         }

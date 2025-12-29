@@ -1,4 +1,4 @@
-package app;
+package main;
 
 import java.io.File;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Scanner;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import checkaccess.accesscheck;
-import manager.Manage;
-import modelconstructor.Employee;
+import controller.Manage;
+import controller.Login;
+import model.EmployeeConstructor;
 import operations.LoginAndPassword;
 
 public class CrudAppMain {
@@ -25,15 +25,15 @@ public class CrudAppMain {
         File file = new File(FILE_PATH);
 
         if (file.exists() && file.length() > 0) {
-            List<Employee> list = mapper.readValue(
-                    file, new TypeReference<List<Employee>>() {});
+            List<EmployeeConstructor> list = mapper.readValue(
+                    file, new TypeReference<List<EmployeeConstructor>>() {});
             ops.setEmployees(list);
         }
         
-        accesscheck.authenticate(ops, sc);
+        Login.authenticate(ops, sc);
         String loggedInId = LoginAndPassword.getLoggedInAdminId();
 
-        Employee loggedInEmployee = ops.findEmp(loggedInId);
+        EmployeeConstructor loggedInEmployee = ops.findEmp(loggedInId);
 
         if (loggedInEmployee.getRole().contains("Admin")) {
             AdminMenu.showMenu(ops, sc, mapper, file);

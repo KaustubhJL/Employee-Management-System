@@ -1,4 +1,4 @@
-package app;
+package main;
 
 public enum AdminChoices {
 	CHANGE_PASSWORD,

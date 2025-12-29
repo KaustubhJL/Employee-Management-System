@@ -1,16 +1,15 @@
 package crudmethods;
-import modelconstructor.Employee;
-
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import com.google.common.hash.Hashing;
 
-import exceptions.InvalidDataException;
+import customExceptions.InvalidDataException;
 //import manager.Manage;
+import model.EmployeeConstructor;
 
 public class AddMethod {
-	public static void add(ArrayList<Employee> al,String id, String name, String mail, String address, String department, ArrayList<String> role, String password) throws InvalidDataException {
+	public static void add(ArrayList<EmployeeConstructor> al,String id, String name, String mail, String address, String department, ArrayList<String> role, String password) throws InvalidDataException {
 		
 		
 		if(name == null || name.trim().isEmpty())
@@ -28,7 +27,7 @@ public class AddMethod {
 	            .toString();
 	    
 	    
-	    Employee emp=new Employee(id, name, mail, address, department, role, hashedPassword);
+	    EmployeeConstructor emp=new EmployeeConstructor(id, name, mail, address, department, role, hashedPassword);
 		al.add(emp);
 		
 		System.out.println("Employee added Successfully!");

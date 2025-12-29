@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import manager.Manage;
-import modelconstructor.Employee;
+import controller.Manage;
+import model.EmployeeConstructor;
 
 public class SaveEmployeesToFile {
 	public static void saveToJson(Manage ops, ObjectMapper objectMapper, File file) {
         try {
-            List<Employee> employeeList = ops.getEmployees();
+            List<EmployeeConstructor> employeeList = ops.getEmployees();
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, employeeList);
             System.out.println("Saved successfully.");
         } catch (IOException e) {

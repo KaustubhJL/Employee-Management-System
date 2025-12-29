@@ -1,24 +1,24 @@
-	package manager;
+	package controller;
 	import java.util.ArrayList;	
 	import java.util.List;
 	import crudmethods.*;
-	import crudinterface.Cruds;
-	import exceptions.EmployeeNotFoundException;
-	import exceptions.IdFormatWrongException;
-	import exceptions.InvalidDataException;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import customExceptions.InvalidDataException;
+import model.CrudInterface;
+import model.EmployeeConstructor;
 
-import modelconstructor.Employee;
-	import java.time.Year;
+import java.time.Year;
 	
 	
-	public class Manage implements Cruds{
-	 	protected ArrayList<Employee> al=new ArrayList<>();
+	public class Manage implements CrudInterface{
+	 	protected ArrayList<EmployeeConstructor> al=new ArrayList<>();
 	 	String dID;
 	 	
-	 	public String setNextId(ArrayList<Employee>al) {
+	 	public String setNextId(ArrayList<EmployeeConstructor>al) {
 		    int max = 000;
 		    int next;
-		    for (Employee e : al) {
+		    for (EmployeeConstructor e : al) {
 		        	String id = e.getId();
 		        	int num=Integer.parseInt(id.substring(4));
 		        	max=Math.max(max,num);
@@ -29,19 +29,19 @@ import modelconstructor.Employee;
 		}
 	 	
 	 	
-		public Employee findEmp(String id) {
-			for(Employee e: al) {
+		public EmployeeConstructor findEmp(String id) {
+			for(EmployeeConstructor e: al) {
 				if(e.getId().equals(id)) return e;
 			}
 			return null;
 		}
 		
 		
-		public void setEmployees(List<Employee> al) {
+		public void setEmployees(List<EmployeeConstructor> al) {
 		    this.al = new ArrayList<>(al);
 		    this.dID = setNextId(this.al);
 		}
-		public List<Employee> getEmployees() {
+		public List<EmployeeConstructor> getEmployees() {
 			return al;
 		}
 		
@@ -98,7 +98,7 @@ import modelconstructor.Employee;
 		
 		public void addRole(String id, String role)
 		        throws EmployeeNotFoundException, IdFormatWrongException {
-		    Employee e = findEmp(id);
+		    EmployeeConstructor e = findEmp(id);
 		    if (e == null) throw new EmployeeNotFoundException("Employee not found");
 		    if (!e.getRole().contains(role)) {
 		        e.getRole().add(role);
@@ -106,7 +106,7 @@ import modelconstructor.Employee;
 		}
 		public void revokeRole(String id, String role)
 		        throws EmployeeNotFoundException, IdFormatWrongException {
-		    Employee e = findEmp(id);
+		    EmployeeConstructor e = findEmp(id);
 		    if (e == null) throw new EmployeeNotFoundException("Employee not found");
 		    e.getRole().remove(role);
 		}

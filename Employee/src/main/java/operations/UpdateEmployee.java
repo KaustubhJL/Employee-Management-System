@@ -4,10 +4,9 @@ package operations;
 import java.util.Scanner;
 //import java.util.ArrayList;
 
-import manager.Manage;
-//import manager.RoleChoice;
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
+import controller.Manage;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
 
 public class UpdateEmployee {
 

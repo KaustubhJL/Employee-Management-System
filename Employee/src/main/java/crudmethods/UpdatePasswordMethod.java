@@ -5,13 +5,12 @@ import java.util.List;
 
 import com.google.common.hash.Hashing;
 
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
-//import modelconstructor.Admin;
-import modelconstructor.Employee;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import model.EmployeeConstructor;
 
 public class UpdatePasswordMethod {
-	public static void updatePassword(List<Employee> employeeList,String loggedInID,String updatedPassword) {
+	public static void updatePassword(List<EmployeeConstructor> employeeList,String loggedInID,String updatedPassword) {
 		if (loggedInID == null) {
             System.out.println("No user logged in.");
             return;
@@ -22,7 +21,7 @@ public class UpdatePasswordMethod {
                 .hashString(updatedPassword.trim(), StandardCharsets.UTF_8)
                 .toString();
 		
-        for (Employee e : employeeList) {
+        for (EmployeeConstructor e : employeeList) {
             if (e.getId().equals(loggedInID)) {
                 e.setPassword(hashedPassword);
                 System.out.println("Password updated.");
@@ -33,7 +32,7 @@ public class UpdatePasswordMethod {
 	}
 	
 	
-	public static void resetPassword(List<Employee> employeeList,String selectedID, String mailCheck,String resetPassword) throws EmployeeNotFoundException,IdFormatWrongException {
+	public static void resetPassword(List<EmployeeConstructor> employeeList,String selectedID, String mailCheck,String resetPassword) throws EmployeeNotFoundException,IdFormatWrongException {
 		
 		
 		if (selectedID == null) {
@@ -48,7 +47,7 @@ public class UpdatePasswordMethod {
                 .hashString(resetPassword.trim(), StandardCharsets.UTF_8)
                 .toString();
 		
-		for (Employee e : employeeList) {
+		for (EmployeeConstructor e : employeeList) {
 	        if (e.getId().equals(selectedID)) {
 //	            userFound = true;
 
@@ -64,13 +63,13 @@ public class UpdatePasswordMethod {
 	    }
 	}
 
-	public static void resetPassword(List<Employee> employeeList,String loggedInID,String resetPassword) {
+	public static void resetPassword(List<EmployeeConstructor> employeeList,String loggedInID,String resetPassword) {
 		
 		String hashedPassword = Hashing.sha256()
                 .hashString(resetPassword.trim(), StandardCharsets.UTF_8)
                 .toString();
 		
-        for (Employee e : employeeList) {
+        for (EmployeeConstructor e : employeeList) {
             if (e.getId().equals(loggedInID)) {
             		e.setPassword(hashedPassword);
                     System.out.println("Password reset.");

@@ -22,4 +22,20 @@
   "department" : "DEV",
   "role" : [ "Employee" ],
   "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25004",
+  "name" : "kaustubh",
+  "mail" : "jlkaustubh@gmail.com",
+  "address" : "hyd",
+  "department" : "dev",
+  "role" : [ "Employee" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25005",
+  "name" : "kaustubh",
+  "mail" : "jlkaustubh@gmail.com",
+  "address" : "hyderabad",
+  "department" : "dev",
+  "role" : [ "Employee", "MANAGER" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
 } ]

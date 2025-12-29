@@ -2,9 +2,9 @@ package operations;
 
 import java.util.Scanner;
 
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
-import manager.Manage;
+import controller.Manage;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
 
 public class UpdateMail {
 	public static void updateMail(Manage ops, Scanner sc, String id) throws EmployeeNotFoundException, IdFormatWrongException {

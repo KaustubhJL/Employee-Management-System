@@ -1,21 +1,22 @@
 package crudmethods;
 import java.util.ArrayList;
-import exceptions.IdFormatWrongException;
-import modelconstructor.Employee;
-import exceptions.EmployeeNotFoundException;
+
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import model.EmployeeConstructor;
 
 public class ShowMethod {
-	public static void showAll(ArrayList<Employee>al) throws EmployeeNotFoundException, IdFormatWrongException{
+	public static void showAll(ArrayList<EmployeeConstructor>al) throws EmployeeNotFoundException, IdFormatWrongException{
 		
 		if(al.isEmpty())
 			throw new EmployeeNotFoundException("No employees to display");
 		
-	        for (Employee emp : al) {
+	        for (EmployeeConstructor emp : al) {
 	            System.out.println(emp);
 	    }
 	}
 	
-	public static void showOne(ArrayList<Employee>al, Employee em) throws EmployeeNotFoundException, IdFormatWrongException{
+	public static void showOne(ArrayList<EmployeeConstructor>al, EmployeeConstructor em) throws EmployeeNotFoundException, IdFormatWrongException{
 		System.out.println(em);
 	}
 }

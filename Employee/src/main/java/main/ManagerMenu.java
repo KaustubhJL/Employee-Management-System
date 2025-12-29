@@ -1,8 +1,9 @@
-package app;
+package main;
 import java.io.File;
 import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import manager.Manage;
+
+import controller.Manage;
 import operations.*;
 
 public class ManagerMenu {
@@ -33,6 +34,7 @@ public class ManagerMenu {
                 case UPDATE:
                     UpdateEmployee.update(ops, sc);
                     SaveEmployeesToFile.saveToJson(ops, mapper, file);
+                   // CreateAuditLogs.auditLogs(mapper,"Update");
                     break;
 
                 case SHOW:
@@ -42,6 +44,7 @@ public class ManagerMenu {
                 case CHANGE_PASSWORD:
                     LoginAndPassword.updatePassword(ops, sc);
                     SaveEmployeesToFile.saveToJson(ops, mapper, file);
+                   // CreateAuditLogs.auditLogs(mapper,"Change Password");
                     break;
 
                 case EXIT:

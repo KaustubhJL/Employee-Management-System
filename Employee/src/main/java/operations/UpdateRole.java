@@ -2,10 +2,9 @@ package operations;
 
 import java.util.Scanner;
 
-import exceptions.EmployeeNotFoundException;
-import exceptions.IdFormatWrongException;
-import manager.Manage;
-import manager.RoleChoice;
+import controller.Manage;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
 
 public class UpdateRole {
 	public static void updateRole(Manage ops, Scanner sc, String id) throws EmployeeNotFoundException, IdFormatWrongException {

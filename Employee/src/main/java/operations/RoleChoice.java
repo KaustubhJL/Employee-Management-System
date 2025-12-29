@@ -1,4 +1,4 @@
-package manager;
+package operations;
 
 public enum RoleChoice {
 ADMIN,

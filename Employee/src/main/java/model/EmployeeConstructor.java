@@ -1,10 +1,10 @@
-package modelconstructor;
+package model;
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 //import com.google.common.hash.Hashing;
 
-public class Employee{
+public class EmployeeConstructor{
 	private String id;
 	private String name;
 	private String mail;
@@ -12,7 +12,7 @@ public class Employee{
 	private String department;
 	private ArrayList<String> role;
 	private String password;
-	public Employee(String id, String name, String mail,String address, String department, ArrayList<String> role,String password) {
+	public EmployeeConstructor(String id, String name, String mail,String address, String department, ArrayList<String> role,String password) {
 		this.id=id;
 		this.name=name;
 		this.mail=mail;
@@ -22,7 +22,7 @@ public class Employee{
 		this.password=password;
 	}
 	
-	public Employee() {
+	public EmployeeConstructor() {
         this.role = new ArrayList<>();
     }
 	public String getId() {

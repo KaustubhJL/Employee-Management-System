@@ -1,13 +1,14 @@
 package operations;
 import java.util.InputMismatchException;
 import java.util.ArrayList;
-import manager.Manage;
 import java.util.Scanner;
-import manager.RoleChoice;
 
-import exceptions.InvalidDataException;
+import controller.Manage;
+import customExceptions.EmployeeNotFoundException;
+import customExceptions.IdFormatWrongException;
+import customExceptions.InvalidDataException;
 public class AddEmployee {
-	public static void add(Manage ops,Scanner sc) {
+	public static void add(Manage ops,Scanner sc) throws EmployeeNotFoundException, IdFormatWrongException {
 
 		try{
 			System.out.println("Enter name of the employee:");
