@@ -8,7 +8,7 @@ import operations.*;
 
 public class AdminCruds {
 
-    public static void start(Manage ops, Scanner sc,
+    public static void showMenu(Manage ops, Scanner sc,
                              ObjectMapper mapper, File file) throws Exception {
 
         AdminChoices choice = null;
