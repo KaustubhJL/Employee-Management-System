@@ -1,0 +1,49 @@
+[ {
+  "id" : "TT25001",
+  "name" : "kaus",
+  "mail" : "jlkaustubh@gmail.com",
+  "address" : "hyderabad",
+  "department" : "dev",
+  "role" : [ "Admin", "Employee" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25003",
+  "name" : "rineeshaaaa",
+  "mail" : "APRNAKIRAN@GMAIL.COM",
+  "address" : "JPT",
+  "department" : "DEV",
+  "role" : [ "Manager" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25004",
+  "name" : "kaustubh",
+  "mail" : "jlkaustubh@gmail.com",
+  "address" : "hyd",
+  "department" : "dev",
+  "role" : [ "Employee" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25005",
+  "name" : "KAUSTUBH",
+  "mail" : "JLKAUSTUBH@GMAIL.COM",
+  "address" : "HYDERABAD",
+  "department" : "DEV",
+  "role" : [ "Employee", "MANAGER", "EMPLOYEE" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25006",
+  "name" : "Kaustubh",
+  "mail" : "hehe@gmail.com",
+  "address" : "hyd",
+  "department" : "dev",
+  "role" : [ "Admin" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+}, {
+  "id" : "TT25007",
+  "name" : "Tharun",
+  "mail" : "tharunreddy@gmail.com",
+  "address" : "hyderabad",
+  "department" : "dev",
+  "role" : [ "Manager" ],
+  "password" : "d35752e39971d74d0809d0a08811a0e2611ae44da360cebe264ba1c1d833e8da"
+} ]
