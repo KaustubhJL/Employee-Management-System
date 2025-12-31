@@ -1,0 +1,5 @@
+package util;
+
+public enum AdminChoices {
+	CHANGE_PASSWORD, RESET_PASSWORD, ADD, UPDATE, DELETE, SELF_DETAILS, SHOW_ALL, SAVE, EXIT;
+}
