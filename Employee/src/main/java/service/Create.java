@@ -52,7 +52,7 @@ public class Create {
 					"The password for new user " + newEmployee.getId() + "to login is: " + randomPasswordForNew);
 
 		} catch (InvalidDataException | IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Check data format!"+e.getMessage());
 		}
 	}
 
