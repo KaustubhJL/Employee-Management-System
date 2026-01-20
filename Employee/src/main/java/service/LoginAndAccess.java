@@ -48,9 +48,6 @@ public class LoginAndAccess {
 	}
 
 	private static Employee accessCheckFile(CrudImplementation ops, String empID, String pass) {
-
-//		String hashedPass = PasswordMethods.hash(pass);
-
 		for (Employee e : EmployeeListOps.findAll()) {
 			if (e.getId().equals(empID) && BCrypt.checkpw(pass, e.getPassword())) {
 				return e;

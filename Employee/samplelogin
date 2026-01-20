@@ -1,3 +1,6 @@
+File 
+
+---------------------------------------
 ID: TT25001
 Password: Defaut123
 Role: Admin
@@ -9,3 +12,11 @@ Role: Manager
 ID: TT25004
 Password: Default123
 Role: Employee
+
+---------------------------------------
+
+PostgreSQL / Supabase
+
+ID: TT26001
+Password: Default123
+Role: Admin

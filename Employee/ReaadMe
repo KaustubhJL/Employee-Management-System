@@ -1,0 +1,48 @@
+You can access the data through a json file, using the employees_data.json file, 
+& through a Postgres database through a self-made database or the cloud hosted supabase;
+
+Enter the application using the details in samplelogin.
+
+
+
+Package Flow:
+
+1. model: 1. Employee constructor
+
+2. main: 1. Main class -> Calls 'controller.MainMenu' to display menu.
+
+3. controller: -> Calls all 'service' package.
+				 1. MainMenu -> Has choices to select a file system/a postgres db. 
+				(Change the dbMenu "connect_to_db" as per the use case, details mentioned).
+				(For a local postgres db, follow the commands in "src/main/resources/SqlQueriesToRunDB")
+				Also calls service.LoginAndAccess for loggin in.
+				2. AdminMenu -> Displays the Menu of an Admin.
+				3. ManagerMenu -> Displays the Menu of a Manager.
+				4. EmployeeMenu -> Displays the Menu of an Employee.
+				
+4. service: Take login values, input values and perform validation. -> Calls 'dao' package.
+				1. LoginAndAccess -> 1. Checks validation of user and their role, for Menu access.
+				1. Create -> Methods to Create a new user.
+				2. Read -> Methods to read data of one or more employees.
+				3. Update -> Methods to Update several fields of an employee.
+				4. Delete -> Methods to delete data of an employee.
+				5. PasswordTableDB -> Accessed by Create to add password of the newly created employee in the passwords table.
+				6. RoleTableDB -> Accessed by Create to add roles of the newly created employee in the roles table.
+				7. SetNextID -> Called by Create to add an auto generated ID to the new user.
+				8. PasswordMethods -> Get details of loggedIn user, Check roles, Hash Password, ResetPassword, UpdatePassword, Create default password.
+				
+5. dao: Implements all methods called by "service"
+				1. CrudInterface -> Contains formats and rules of data.
+				1. CrudImplementation -> Implements the CrudInterface, and performs actual data manipulation.
+				3. EmployeeListOps -> Performs operations on the EmployeeList containing all employees' data.
+				4. SaveEmployeesToFile -> Saves the EmployeeList to the file.
+				
+6. util: Contains validations metrics
+				1. MakeConnection -> Checks and performs PostgreSQL database connection.
+				2. ValidateId -> Validates the Id of the user on whom data manipulation is to take place.
+				3. ValidPassword -> Checks the password pattern when ccreated manually.
+				
+7.  enums -> contains enums for several parts of the project.
+
+8. customExceptions -> Contains custom exceptions.
+				 

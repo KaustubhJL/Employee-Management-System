@@ -14,4 +14,12 @@
   "department" : "Admin",
   "role" : [ "Admin", "Manager" ],
   "password" : "fPEpGiXxe3N#"
+}, {
+  "id" : "TT26004",
+  "name" : "Charlie",
+  "mail" : "charliegmail.com",
+  "address" : "Dev",
+  "department" : "HR",
+  "role" : [ "Admin" ],
+  "password" : "H)e3m_QZW+&6"
 } ]
