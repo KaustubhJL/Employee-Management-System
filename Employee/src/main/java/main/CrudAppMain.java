@@ -1,8 +1,6 @@
 package main;
 
-//import java.sql.Connection;
 import controller.MainMenu;
-//import controller.MakeConnection;
 
 public class CrudAppMain {
 

@@ -19,6 +19,11 @@ public class Delete {
 		System.out.print("Enter employee ID to delete: ");
 		String id = sc.nextLine();
 
+		if (id == PasswordMethods.getLoggedInId()) {
+			System.out.println("You Cannot delete your own records.");
+			return;
+		}
+
 		System.out.print("Are you sure you want to delete Employee " + id + "? (yes/no): ");
 		String confirm = sc.nextLine().trim().toLowerCase();
 
@@ -35,6 +40,11 @@ public class Delete {
 		try {
 			System.out.print("Enter the Employee ID to delete: ");
 			String id = sc.nextLine();
+
+			if (id == PasswordMethods.getLoggedInId()) {
+				System.out.println("You Cannot delete your own records.");
+				return;
+			}
 
 			System.out.print("Are you sure you want to delete Employee " + id + "? (yes/no): ");
 			String confirm = sc.nextLine().trim().toLowerCase();

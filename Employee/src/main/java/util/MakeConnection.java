@@ -1,15 +1,13 @@
-package controller;
-
+package util;
 import java.sql.Connection;
-//import java.sql.DriverManager;
-
 public class MakeConnection {
-	public Connection connect_to_db(String dbname, String user, String pass) {
+	
+	public Connection connect_to_db(String host,String dbname, String user, String pass) {
 		Connection conn = null;
 		try {
 			Class.forName("org.postgresql.Driver");
 
-			conn = java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, pass);
+			conn = java.sql.DriverManager.getConnection("jdbc:postgresql://"+host+":5432/" + dbname, user, pass);
 
 			System.out.println("Connection successful");
 

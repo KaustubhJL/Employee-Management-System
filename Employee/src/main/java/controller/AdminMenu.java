@@ -57,7 +57,7 @@ public class AdminMenu {
 					ops.showAll().forEach(System.out::println);
 					break;
 
-				case SELF_DETAILS:
+				case MY_DETAILS:
 					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					break;
 
@@ -115,12 +115,10 @@ public class AdminMenu {
 					break;
 
 				case UPDATE:
-//					String id = PasswordMethods.getLoggedInId();
 					Update.handleUpdateDB(ops, sc, conn);
 					break;
 
 				case DELETE:
-//					String id = PasswordMethods.getLoggedInId();
 					Delete.handleDeleteDB(ops, sc, conn);
 					break;
 
@@ -128,8 +126,7 @@ public class AdminMenu {
 					ops.showAll().forEach(System.out::println);
 					break;
 
-				case SELF_DETAILS:
-//					System.out.println(ops.showOne(PasswordMethods.getLoggedInId()));
+				case MY_DETAILS:
 					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					break;
 

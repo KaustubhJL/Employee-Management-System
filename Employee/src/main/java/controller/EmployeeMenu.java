@@ -35,8 +35,7 @@ public class EmployeeMenu {
 					Update.handleUpdateForEmployee(ops, sc);
 					break;
 
-				case SHOW_SELF:
-//					System.out.println(ops.showOne(PasswordMethods.getLoggedInId()));
+				case MY_DETAILS:
 					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					break;
 
@@ -86,8 +85,7 @@ public class EmployeeMenu {
 					Update.handleUpdateForEmployeeDB(ops, sc);
 					break;
 
-				case SHOW_SELF:
-//					System.out.println(ops.showOne(PasswordMethods.getLoggedInId()));
+				case MY_DETAILS:
 					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					break;
 

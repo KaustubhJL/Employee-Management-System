@@ -13,6 +13,7 @@ import dao.EmployeeListOps;
 import enums.ChooseBackend;
 import model.Employee;
 import service.PasswordMethods;
+import util.MakeConnection;
 import service.LoginAndAccess;
 
 public class MainMenu {
@@ -85,9 +86,26 @@ public class MainMenu {
 	}
 
 	public static void DBMenu() {
+		
+		
+		/*
+		 * POSTGRESQL: (LOCAL)
+		 * host: "localhost"
+		 * dbname: "crudoperations"
+		 * user: "postgres"
+		 * password: "pass"
+		 * 
+		 * 
+		 * Supabase:  (MAKE SURE TO OCNNECT TO A IPV6 NETWORK)
+		 * host: "db.gngwzkdvmixpgvkxknpf.supabase.co"
+		 * dbname: "postgres?sslmode=require"
+		 * user: "postgres"
+		 * password: "tektalisPASS123$"
+		 * 
+		 */
 
 		MakeConnection db = new MakeConnection();
-		Connection conn = db.connect_to_db("crudoperations", "postgres", "pass");
+		Connection conn = db.connect_to_db("localhost","crudoperations", "postgres", "pass");
 
 		if (conn == null) {
 			System.out.println("Database connection failed.");

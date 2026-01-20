@@ -1,5 +1,5 @@
 package enums;
 
 public enum EmployeeChoices {
-	SHOW_SELF, UPDATE, CHANGE_PASSWORD, EXIT
+	MY_DETAILS, UPDATE, CHANGE_PASSWORD, EXIT
 }

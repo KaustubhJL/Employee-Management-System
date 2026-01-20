@@ -23,21 +23,24 @@ public class Create {
 		try {
 			System.out.print("Enter name: ");
 			String name = sc.nextLine();
-
-			System.out.print("Enter mail: ");
-			String mail = sc.nextLine();
-
-			System.out.print("Enter address: ");
-			String address = sc.nextLine();
-
-			System.out.print("Enter department: ");
-			String department = sc.nextLine();
 			
 			if (name == null || name.trim().isEmpty())
 				throw new InvalidDataException("Name cannot be empty");
 
+			System.out.print("Enter mail: ");
+			String mail = sc.nextLine();
+			
 			if (mail == null || !mail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
 				throw new InvalidDataException("Invalid email format");
+
+			System.out.print("Enter address: ");
+			String address = sc.nextLine();
+			
+			if (address == null || address.trim().isEmpty())
+				throw new InvalidDataException("Department cannot be empty");
+
+			System.out.print("Enter department: ");
+			String department = sc.nextLine();
 
 			if (department == null || department.trim().isEmpty())
 				throw new InvalidDataException("Department cannot be empty");
@@ -70,22 +73,25 @@ public class Create {
 		try {
 			System.out.print("Enter name: ");
 			String name = sc.nextLine();
-
-			System.out.print("Enter mail: ");
-			String mail = sc.nextLine();
-
-			System.out.print("Enter address: ");
-			String address = sc.nextLine();
-
-			System.out.print("Enter department: ");
-			String department = sc.nextLine();
 			
 			if (name == null || name.trim().isEmpty())
 				throw new InvalidDataException("Name cannot be empty");
 
+			System.out.print("Enter mail: ");
+			String mail = sc.nextLine();
+			
 			if (mail == null || !mail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
 				throw new InvalidDataException("Invalid email format");
 
+			System.out.print("Enter address: ");
+			String address = sc.nextLine();
+			
+			if (address == null || address.trim().isEmpty())
+				throw new InvalidDataException("Name cannot be empty");
+
+			System.out.print("Enter department: ");
+			String department = sc.nextLine();
+			
 			if (department == null || department.trim().isEmpty())
 				throw new InvalidDataException("Department cannot be empty");
 

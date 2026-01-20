@@ -1,5 +1,5 @@
 package enums;
 
 public enum ManagerChoices {
-	UPDATE, CHANGE_PASSWORD, SELF_DETAILS, SHOW_ALL, EXIT
+	UPDATE, CHANGE_PASSWORD, MY_DETAILS, SHOW_ALL, EXIT
 }

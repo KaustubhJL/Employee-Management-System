@@ -43,8 +43,7 @@ public class ManagerMenu {
 					ops.showAll().forEach(System.out::println);
 					break;
 
-				case SELF_DETAILS:
-//					System.out.println(ops.showOne(PasswordMethods.getLoggedInId()));
+				case MY_DETAILS:
 					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					break;
 
@@ -95,7 +94,6 @@ public class ManagerMenu {
 				switch (choice) {
 
 				case UPDATE:
-//					String id = PasswordMethods.getLoggedInId();
 					Update.handleUpdateDB(ops, sc, conn);
 					break;
 
@@ -103,8 +101,7 @@ public class ManagerMenu {
 					ops.showAll().forEach(System.out::println);
 					break;
 
-				case SELF_DETAILS:
-//					System.out.println(ops.showOne(PasswordMethods.getLoggedInId()));
+				case MY_DETAILS:
 					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					break;
 

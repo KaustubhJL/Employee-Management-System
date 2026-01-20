@@ -1,6 +1,9 @@
 package testings;
 
 import model.Employee;
+import service.PasswordMethods;
+import service.SetNextID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,42 +43,42 @@ public class TestServices {
         return mapper.readValue(file, new TypeReference<List<Employee>>() {});
     }
 
-//    @Test
-//    void testAddingEmployeeToMockFile() throws Exception {
-//        List<Employee> mockList = loadEmployeesFromFile();
-//        Employee newEmp = new Employee("TT26001", "Charlie", "charlie@gmail.com", "SF", "HR",
-//                new ArrayList<>(List.of("Admin")), PasswordMethods.randomPasswordGenerator());
-//        mockList.add(newEmp);
-//        saveToMock(mapper, file,mockList);
-//
-//        List<Employee> reloaded= loadEmployeesFromFile();
-//        assertEquals("Charlie", reloaded.get(0).getName());
-//        assertEquals("TT26001", reloaded.get(0).getId());
-//        assertEquals("charlie@gmail.com", reloaded.get(0).getMail());
-//        assertEquals("SF", reloaded.get(0).getAddress());
-//        assertEquals("HR", reloaded.get(0).getDepartment());
-//    }
+    @Test
+    void testAddingEmployeeToMockFile() throws Exception {
+        List<Employee> mockList = loadEmployeesFromFile();
+        Employee newEmp = new Employee("TT26001", "Charlie", "charlie@gmail.com", "SF", "HR",
+                new ArrayList<>(List.of("Admin")), PasswordMethods.randomPasswordGenerator());
+        mockList.add(newEmp);
+        saveToMock(mapper, file,mockList);
 
-//    @Test
-//    void testGenerateNextIdAfterAddingEmployee() throws Exception {
-//        List<Employee> mockList = loadEmployeesFromFile();
-//
-//        String nextId = SetNextID.generateNextId(mockList);
-//        assertEquals("TT26003", nextId);
-//    }
+        List<Employee> reloaded= loadEmployeesFromFile();
+        assertEquals("Charlie", reloaded.get(0).getName());
+        assertEquals("TT26001", reloaded.get(0).getId());
+        assertEquals("charlie@gmail.com", reloaded.get(0).getMail());
+        assertEquals("SF", reloaded.get(0).getAddress());
+        assertEquals("HR", reloaded.get(0).getDepartment());
+    }
+
+    @Test
+    void testGenerateNextIdAfterAddingEmployee() throws Exception {
+        List<Employee> mockList = loadEmployeesFromFile();
+
+        String nextId = SetNextID.generateNextId(mockList);
+        assertEquals("TT26003", nextId);
+    }
     
-//    @Test
-//    void testAddingNewEmployeeWithAutoId() throws Exception{
-//    	List<Employee> mockList = loadEmployeesFromFile();
-//    	Employee newEmp=new Employee(SetNextID.generateNextId(mockList),
-//    			"Rineesha","rin@gmail.com","hyd","Admin",new ArrayList<>
-//    	(List.of("Admin","Manager")),PasswordMethods.randomPasswordGenerator());
-//    	 mockList.add(newEmp);
-//         saveToMock(mapper, file,mockList);
-//    	
-//         List<Employee> reloaded= loadEmployeesFromFile();
-//         assertEquals("TT26001", reloaded.get(0).getId());
-//    } 
+    @Test
+    void testAddingNewEmployeeWithAutoId() throws Exception{
+    	List<Employee> mockList = loadEmployeesFromFile();
+    	Employee newEmp=new Employee(SetNextID.generateNextId(mockList),
+    			"Rineesha","rin@gmail.com","hyd","Admin",new ArrayList<>
+    	(List.of("Admin","Manager")),PasswordMethods.randomPasswordGenerator());
+    	 mockList.add(newEmp);
+         saveToMock(mapper, file,mockList);
+    	
+         List<Employee> reloaded= loadEmployeesFromFile();
+         assertEquals("TT26001", reloaded.get(0).getId());
+    } 
     
     @Test
     void testUpdateName() throws Exception{
