@@ -1,4 +1,4 @@
-[  {
+[ {
   "id" : "TT26001",
   "name" : "Charlie",
   "mail" : "charlie@gmail.com",
@@ -8,7 +8,7 @@
   "password" : "3=$Zw(Tq#FuW"
 }, {
   "id" : "TT26002",
-  "name" : "Rineesha",
+  "name" : "Tharun",
   "mail" : "rin@gmail.com",
   "address" : "hyd",
   "department" : "Admin",

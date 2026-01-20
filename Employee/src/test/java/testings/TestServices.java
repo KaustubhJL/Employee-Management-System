@@ -9,10 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import dao.EmployeeListOps;
-import dao.SaveEmployeesToFile;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import service.PasswordMethods;
@@ -71,16 +67,31 @@ public class TestServices {
 //        assertEquals("TT26003", nextId);
 //    }
     
+//    @Test
+//    void testAddingNewEmployeeWithAutoId() throws Exception{
+//    	List<Employee> mockList = loadEmployeesFromFile();
+//    	Employee newEmp=new Employee(SetNextID.generateNextId(mockList),
+//    			"Rineesha","rin@gmail.com","hyd","Admin",new ArrayList<>
+//    	(List.of("Admin","Manager")),PasswordMethods.randomPasswordGenerator());
+//    	 mockList.add(newEmp);
+//         saveToMock(mapper, file,mockList);
+//    	
+//         List<Employee> reloaded= loadEmployeesFromFile();
+//         assertEquals("TT26001", reloaded.get(0).getId());
+//    } 
+    
     @Test
-    void testAddingNewEmployeeWithAutoId() throws Exception{
-    	List<Employee> mockList = loadEmployeesFromFile();
-    	Employee newEmp=new Employee(SetNextID.generateNextId(mockList),
-    			"Rineesha","rin@gmail.com","hyd","Admin",new ArrayList<>
-    	(List.of("Admin","Manager")),PasswordMethods.randomPasswordGenerator());
-    	 mockList.add(newEmp);
-         saveToMock(mapper, file,mockList);
-    	
-         List<Employee> reloaded= loadEmployeesFromFile();
-         assertEquals("TT26001", reloaded.get(0).getId());
-    } 
+    void testUpdateName() throws Exception{
+    	List<Employee> mockList=loadEmployeesFromFile();
+    	 String targetId = "TT26002";
+    	 for (Employee emp : mockList) {
+    	        if (emp.getId().equals(targetId)) {
+    	            emp.setName("Tharun");
+    	            break;
+    	        }
+    	    }
+    	 saveToMock(mapper, file, mockList);
+    	 List<Employee> reloaded = loadEmployeesFromFile();
+    	 assertEquals("Tharun", reloaded.get(1).getName());
+    }
 }
