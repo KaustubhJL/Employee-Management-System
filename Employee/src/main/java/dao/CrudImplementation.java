@@ -192,7 +192,6 @@ public class CrudImplementation implements CrudInterface {
 			}
 
 			RoleTableDB.insertRole(conn, generatedEmpId, role);
-//			PasswordTableDB.insertPassword(conn, generatedEmpId, null);
 			conn.commit();
 			return generatedEmpId;
 		} catch (Exception e) {

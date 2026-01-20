@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import service.PasswordMethods;
-import service.SetNextID;
-
 public class TestServices {
 	
 
