@@ -1,8 +1,9 @@
 package util;
 import java.sql.Connection;
+import java.sql.SQLException;
 public class MakeConnection {
 	
-	public Connection connect_to_db(String host,String dbname, String user, String pass) {
+	public Connection connect_to_db(String host,String dbname, String user, String pass) throws SQLException {
 		Connection conn = null;
 		try {
 			Class.forName("org.postgresql.Driver");

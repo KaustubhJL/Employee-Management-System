@@ -4,6 +4,9 @@ import java.io.File;
 
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;	
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
 
@@ -13,6 +16,7 @@ import dao.CrudImplementation;
 import dao.SaveEmployeesToFile;
 
 public class Delete {
+	private static final Logger logger = LoggerFactory.getLogger(Delete.class);
 	public static void handleDelete(CrudImplementation ops, Scanner sc, ObjectMapper mapper, File file)
 			throws EmployeeNotFoundException, IdFormatWrongException {
 
@@ -20,7 +24,7 @@ public class Delete {
 		String id = sc.nextLine();
 
 		if (id == PasswordMethods.getLoggedInId()) {
-			System.out.println("You Cannot delete your own records.");
+			logger.warn("You Cannot delete your own records.");
 			return;
 		}
 
@@ -28,12 +32,12 @@ public class Delete {
 		String confirm = sc.nextLine().trim().toLowerCase();
 
 		if (!confirm.equals("yes")) {
-			System.out.println("Deletion cancelled.");
+			logger.info("Deletion cancelled.");
 			return;
 		}
 		ops.delete(id);
 		SaveEmployeesToFile.saveToJson(mapper, file);
-		System.out.println("Employee " + id + " has been deleted successfully.");
+		logger.info("Employee {} has been deleted successfully.", id);
 	}
 
 	public static void handleDeleteDB(CrudImplementation ops, Scanner sc, Connection conn) {
@@ -42,7 +46,7 @@ public class Delete {
 			String id = sc.nextLine();
 
 			if (id == PasswordMethods.getLoggedInId()) {
-				System.out.println("You Cannot delete your own records.");
+				logger.warn("You Cannot delete your own records.");
 				return;
 			}
 
@@ -54,10 +58,10 @@ public class Delete {
 				return;
 			}
 			ops.deleteDB(id);
-			System.out.println("Employee " + id + " has been deleted successfully.");
+			 logger.info("Employee {} has been deleted successfully.", id);
 
 		} catch (Exception e) {
-			System.out.println("Error deleting employee: " + e.getMessage());
+			 logger.error("Error deleting employee: {}", e.getMessage(), e);
 		}
 	}
 }

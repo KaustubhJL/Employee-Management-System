@@ -7,9 +7,17 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import model.Employee;
 
 public class Read {
+	
+	//currently only for db, file reading operations in employeelistOps.java
+	
+	
+    private static final Logger logger = LoggerFactory.getLogger(Read.class);
 	public static List<Employee> readAll(Connection conn) {
 		List<Employee> list = new ArrayList<>();
 
@@ -24,12 +32,12 @@ public class Read {
 
 			while (rs.next()) {
 				list.add(new Employee(rs.getString("empid"), rs.getString("empname"), rs.getString("empmail"),
-						rs.getString("empaddress"), rs.getString("empdepartment"), new ArrayList<>(), // roles empty
+						rs.getString("empaddress"), rs.getString("empdepartment"), new ArrayList<>(),
 						null));
 			}
-
+			logger.info("Employees data fetched");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			 logger.error("Error fetching all employees: {}", e.getMessage(), e);
 		}
 
 		return list;
@@ -51,15 +59,16 @@ public class Read {
 			ResultSet rs = ps.executeQuery();
 
 			if (!rs.next()) {
+				logger.warn("Employee with ID {} not found", id);
 				return null;
 			}
-
+			logger.info("Fetched employee with ID {}", id);
 			return new Employee(rs.getString("empid"), rs.getString("empname"), rs.getString("empmail"),
 					rs.getString("empaddress"), rs.getString("empdepartment"), new ArrayList<>(),
 					null);
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error("Error fetching employee with ID {}: {}", id, e.getMessage(), e);
 			return null;
 		}
 	}
@@ -91,7 +100,8 @@ public class Read {
 			if (!rs.next()) {
 				return null;
 			}
-
+			logger.info("Fetched self details for employee ID {}", id);
+			
 			return new Employee(rs.getString("empid"), rs.getString("empname"), rs.getString("empmail"),
 					rs.getString("empaddress"), rs.getString("empdepartment"), roles,
 					null);
@@ -101,4 +111,5 @@ public class Read {
 			return null;
 		}
 	}
+	
 }

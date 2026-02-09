@@ -111,7 +111,7 @@ public class CrudImplementation implements CrudInterface {
 	}
 
 	public void updateMail(String id, String mail) throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
-			getExistingEmployee(id).setMail(mail);
+		getExistingEmployee(id).setMail(mail);
 	}
 
 	public void updateAddress(String id, String address) throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
@@ -155,7 +155,7 @@ public class CrudImplementation implements CrudInterface {
 			ResultSet rs=ps.executeQuery();
 			return rs.next();
 		}
-		catch(Exception e) {
+		catch(SQLException e) {
 			return false;
 		}
 	}
@@ -186,7 +186,7 @@ public class CrudImplementation implements CrudInterface {
 			RoleTableDB.insertRole(conn, generatedEmpId, role);
 			conn.commit();
 			return generatedEmpId;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			conn.rollback();
 			throw e;
 		} finally {
@@ -218,7 +218,7 @@ public class CrudImplementation implements CrudInterface {
 				System.out.println("No employee found with ID: " + id);
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Error deleting employee: " + e.getMessage());
 		}
 	}
@@ -237,7 +237,7 @@ public class CrudImplementation implements CrudInterface {
 
 			Read.readOne(conn, id);
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -257,7 +257,7 @@ public class CrudImplementation implements CrudInterface {
 
 			Read.readOne(conn, id);
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -277,7 +277,7 @@ public class CrudImplementation implements CrudInterface {
 
 			Read.readOne(conn, id);
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -297,7 +297,7 @@ public class CrudImplementation implements CrudInterface {
 
 			Read.readOne(conn, id);
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -316,7 +316,7 @@ public class CrudImplementation implements CrudInterface {
 			}
 
 			Read.readOne(conn, id);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -338,7 +338,7 @@ public class CrudImplementation implements CrudInterface {
 
 			Read.readOne(conn, id);
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -362,7 +362,7 @@ public class CrudImplementation implements CrudInterface {
 				System.out.println("Employee not found: " + id);
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Failed to update password: " + e.getMessage());
 		}
 	}

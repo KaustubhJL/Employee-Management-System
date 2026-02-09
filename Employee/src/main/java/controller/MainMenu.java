@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,7 +50,7 @@ public class MainMenu {
 
 			}
 		} catch (Exception e) {
-			System.out.println("Select correct option"+e.getMessage());
+			System.out.println("Select correct option" + e.getMessage());
 
 		}
 	}
@@ -79,38 +81,41 @@ public class MainMenu {
 			} else {
 				EmployeeMenu.showMenu(ops, sc);
 			}
-
+		} catch (IOException e) {
+			System.out.println("Error reading file: " + e.getMessage());
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
 
 	public static void DBMenu() {
-		
-		
+
 		/*
-		 * POSTGRESQL: (LOCAL)
-		 * host: "localhost"
-		 * dbname: "crudoperations"
-		 * user: "postgres"
-		 * password: "pass"
+		 * POSTGRESQL: (LOCAL) host: "localhost" dbname: "crudoperations" user:
+		 * "postgres" password: "pass"
 		 * 
 		 * 
-		 * Supabase:  (MAKE SURE TO OCNNECT TO A IPV6 NETWORK)
-		 * host: "db.gngwzkdvmixpgvkxknpf.supabase.co"
-		 * dbname: "postgres?sslmode=require"
-		 * user: "postgres"
-		 * password: "tektalisPASS123$"
+		 * Supabase: (MAKE SURE TO OCNNECT TO A IPV6 NETWORK) host:
+		 * "db.gngwzkdvmixpgvkxknpf.supabase.co" dbname: "postgres?sslmode=require"
+		 * user: "postgres" password: "tektalisPASS123$"
 		 * 
 		 */
 
 		MakeConnection db = new MakeConnection();
-		Connection conn = db.connect_to_db("localhost","crudoperations", "postgres", "pass");
+		Connection conn = null;
+
+		try {
+			conn = db.connect_to_db("localhost", "crudoperations", "postgres", "pass");
+		} catch (SQLException e) {
+			System.out.println("Database connection failed: " + e.getMessage());
+			return;
+		}
 
 		if (conn == null) {
 			System.out.println("Database connection failed.");
 			return;
 		}
+
 		CrudImplementation ops = new CrudImplementation(ChooseBackend.DB, conn);
 
 		try {

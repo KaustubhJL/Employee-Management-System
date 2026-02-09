@@ -10,12 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import dao.CrudImplementation;
 import dao.EmployeeListOps;
 import model.Employee;
 
 public class LoginAndAccess {
+	private static final Logger logger = LoggerFactory.getLogger(LoginAndAccess.class);
+	
 	public static void authenticateInFile(CrudImplementation ops, Scanner sc) {
 
 		Console console = System.console();
@@ -43,7 +47,7 @@ public class LoginAndAccess {
 				return;
 			}
 
-			System.out.println("Check details and try again.");
+			logger.warn("Check details and try again.");
 		}
 	}
 
@@ -73,24 +77,24 @@ public class LoginAndAccess {
 				ResultSet rs = ps.executeQuery();
 
 				if (!rs.next()) {
-					System.out.println("Invalid Employee ID. Please try again.");
+					logger.warn("Invalid Employee ID. Please try again.");
 					continue;
 				}
 
 				String storedHash = rs.getString("empPassword");
 
 				if (!BCrypt.checkpw(password, storedHash)) {
-					System.out.println("Invalid password. Please try again.");
+					logger.warn("Invalid password. Please try again.");
 					continue;
 				}
 				List<String> roles = fetchRoles(conn, empId);
 				PasswordMethods.setLoginContext(empId, roles);
 
-				System.out.println("Login successful!");
+				logger.info("Login successful!");
 				return true;
 
 			} catch (Exception e) {
-				System.out.println("Validation error: " + e.getMessage());
+				logger.warn("Login Failed. " + e.getMessage());
 			}
 		}
 	}

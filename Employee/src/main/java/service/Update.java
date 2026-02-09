@@ -5,6 +5,9 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import customExceptions.EmployeeNotFoundException;
@@ -14,8 +17,13 @@ import dao.CrudImplementation;
 import dao.EmployeeListOps;
 import dao.SaveEmployeesToFile;
 import enums.RoleChoice;
+import util.ValidateAddress;
+import util.ValidateDepartment;
+import util.ValidateMail;
+import util.ValidateName;
 
 public final class Update {
+	private static final Logger logger = LoggerFactory.getLogger(Update.class);
 
 	private Update() {
 	}
@@ -24,7 +32,8 @@ public final class Update {
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 
 		if (EmployeeListOps.isEmpty()) {
-			System.out.println("Add data before updation");
+			logger.warn("There are no employees at the moment, add data first.");
+//			System.out.println("Add data before updation");
 			return;
 		}
 
@@ -43,7 +52,8 @@ public final class Update {
 			targetId = sc.nextLine();
 
 			if (!ops.employeeExists(targetId)) {
-				System.out.println("Employee not found!");
+				logger.warn("Employee not found!");
+//				System.out.println("Employee not found!");
 				return;
 			}
 		}
@@ -66,7 +76,7 @@ public final class Update {
 				sc.nextLine();
 			} catch (Exception e) {
 				sc.nextLine();
-				System.out.println("Please enter a number only.");
+				logger.warn("Invalid input, enter a number.");
 				continue;
 			}
 
@@ -77,10 +87,11 @@ public final class Update {
 			case 4 -> updateAddress(ops, sc, targetId);
 			case 5 -> updateDepartment(ops, sc, targetId);
 			case 6 -> updateRole(ops, sc, targetId);
-			default -> System.out.println("Invalid choice");
+			default -> logger.warn("Invalid choice selected for update: {}", ch);
 			}
 
 			SaveEmployeesToFile.saveToJson(mapper, file);
+			logger.info("Updated employee data for ID {}", targetId);
 			ops.showAll().forEach(System.out::println);
 			break;
 		}
@@ -98,40 +109,40 @@ public final class Update {
 	private static void updateName(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		System.out.print("New name: ");
-		String name=sc.nextLine();
-		if (name == null || name.trim().isEmpty() || name.matches(".*\\d.*"))
-			throw new InvalidDataException("Name cannot be empty");
+		String name = sc.nextLine();
+		ValidateName.validateName(name);
 		ops.updateName(id, name);
+		logger.info("Updated name for employee ID {}: {}", id, name);
 		return;
 	}
 
 	private static void updateMail(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		System.out.print("New mail: ");
-		String mail=sc.nextLine();
-		if (mail == null || !mail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
-			throw new InvalidDataException("Invalid email format");
+		String mail = sc.nextLine();
+		ValidateMail.validateMail(mail);
 		ops.updateMail(id, mail);
+		logger.info("Updated mail for employee ID {}: {}", id, mail);
 		return;
 	}
 
 	private static void updateAddress(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		System.out.print("New address: ");
-		String address=sc.nextLine();
-		if (address == null || address.trim().isEmpty())
-			throw new InvalidDataException("Address cannot be empty");
+		String address = sc.nextLine();
+		ValidateAddress.validateAddress(address);
 		ops.updateAddress(id, address);
+		logger.info("Updated address for employee ID {}: {}", id, address);
 		return;
 	}
 
 	private static void updateDepartment(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		System.out.print("New department: ");
-		String department=sc.nextLine();
-		if (department == null || department.trim().isEmpty())
-			throw new InvalidDataException("Department cannot be empty");
+		String department = sc.nextLine();
+		ValidateDepartment.validateDepartment(department);
 		ops.updateDepartment(id, sc.nextLine());
+		logger.info("Updated department for employee ID {}: {}", id, department);
 		return;
 	}
 
@@ -152,10 +163,12 @@ public final class Update {
 
 		if (ch == 1) {
 			ops.addRole(id, role.name());
+			logger.info("Added role {} to employee ID {}", role, id);
 		} else if (ch == 2) {
 			ops.revokeRole(id, role.name());
+			logger.info("Revoked role {} from employee ID {}", role, id);
 		} else {
-			System.out.println("Invalid choice");
+			logger.warn("Invalid role operation choice: {}", ch);
 		}
 		return;
 	}
@@ -186,7 +199,7 @@ public final class Update {
 				break;
 			}
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.warn("Error: " + e.getMessage());
 		}
 		return;
 	}
@@ -212,7 +225,7 @@ public final class Update {
 				targetId = sc.nextLine();
 
 				if (!ops.employeeExistsDB(targetId)) {
-					System.out.println("Employee not found!");
+					logger.warn("Employee not found!");
 					return;
 				}
 			}
@@ -234,7 +247,7 @@ public final class Update {
 					sc.nextLine();
 				} catch (Exception e) {
 					sc.nextLine();
-					System.out.println("Please enter a number only.");
+					logger.warn("Invalid input, enter a number.");
 					continue;
 				}
 
@@ -245,12 +258,12 @@ public final class Update {
 				case 4 -> updateAddressDB(ops, sc, targetId);
 				case 5 -> updateDepartmentDB(ops, sc, targetId);
 				case 6 -> updateRoleDB(ops, sc, targetId);
-				default -> System.out.println("Invalid choice");
+				default -> logger.warn("Invalid choice selected for update: {}", ch);
 				}
 				break;
 			}
 		} catch (Exception e) {
-			System.out.println("Please enter a number only.");
+			logger.warn("Enter the ocrrect number.");
 		}
 	}
 
@@ -264,37 +277,37 @@ public final class Update {
 
 	public static void updateNameDB(CrudImplementation ops, Scanner sc, String id) throws InvalidDataException {
 		System.out.print("New name: ");
-		String name=sc.nextLine();
-		if (name == null || name.trim().isEmpty())
-			throw new InvalidDataException("Name cannot be empty");
+		String name = sc.nextLine();
+		ValidateName.validateName(name);
 		ops.updateNameDB(id, name);
+		logger.info("Updated name for employee ID {}: {}", id, name);
 		return;
 	}
 
 	public static void updateMailDB(CrudImplementation ops, Scanner sc, String id) throws InvalidDataException {
 		System.out.print("New mail: ");
-		String mail=sc.nextLine();
-		if (mail == null || !mail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))
-			throw new InvalidDataException("Invalid email format");
+		String mail = sc.nextLine();
+		ValidateMail.validateMail(mail);
 		ops.updateMailDB(id, mail);
+		logger.info("Updated mail for employee ID {}: {}", id, mail);
 		return;
 	}
 
 	public static void updateAddressDB(CrudImplementation ops, Scanner sc, String id) throws InvalidDataException {
 		System.out.print("New address: ");
-		String address=sc.nextLine();
-		if (address == null || address.trim().isEmpty())
-			throw new InvalidDataException("Address cannot be empty");
+		String address = sc.nextLine();
+		ValidateAddress.validateAddress(address);
 		ops.updateAddressDB(id, address);
-return;
+		logger.info("Updated address for employee ID {}: {}", id, address);
+		return;
 	}
 
 	public static void updateDepartmentDB(CrudImplementation ops, Scanner sc, String id) throws InvalidDataException {
 		System.out.print("New department: ");
-		String department=sc.nextLine();
-		if (department == null || department.trim().isEmpty())
-			throw new InvalidDataException("Department cannot be empty");
+		String department = sc.nextLine();
+		ValidateDepartment.validateDepartment(department);
 		ops.updateDepartmentDB(id, department);
+		logger.info("Updated department for employee ID {}: {}", id, department);
 		return;
 	}
 
@@ -314,15 +327,17 @@ return;
 
 		if (ch == 1) {
 			ops.addRoleDB(id, role.name());
+			logger.info("Added role {} to employee ID {}", role, id);
 		} else if (ch == 2) {
 			ops.revokeRoleDB(id, role.name());
+			logger.info("Revoked role {} from employee ID {}", role, id);
 		} else {
-			System.out.println("Invalid choice");
+			logger.warn("Invalid choice");
 		}
 		return;
 	}
 
-	public final static void handleUpdateForEmployeeDB(CrudImplementation ops, Scanner sc) {
+	public final static void handleUpdateForEmployeeDB(CrudImplementation ops, Scanner sc) throws InvalidDataException {
 
 		System.out.println("Enter 1 to update your Mail ID");
 		System.out.println("Enter 2 to update your Address");
@@ -344,11 +359,13 @@ return;
 				break;
 
 			default:
-				System.out.println("Invalid choice");
+				logger.warn("Invalid choice");
 				break;
 			}
+		} catch (InvalidDataException e) {
+			logger.warn("Invalid data: " + e.getMessage());
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			logger.warn("Error updating data: " + e.getMessage());
 		}
 		return;
 	}
