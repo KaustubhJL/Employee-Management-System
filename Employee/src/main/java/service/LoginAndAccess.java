@@ -70,7 +70,7 @@ public class LoginAndAccess {
 			String password = sc.nextLine();
 
 			try {
-				String passQuery = "SELECT empPassword FROM passwords WHERE empId = ?";
+				String passQuery = "SELECT empPassword FROM passwords WHERE empId = ? AND active IS TRUE";
 				PreparedStatement ps = conn.prepareStatement(passQuery);
 				ps.setString(1, empId);
 
@@ -103,7 +103,7 @@ public class LoginAndAccess {
 
 		List<String> roles = new ArrayList<>();
 
-		String roleQuery = "SELECT role FROM roles WHERE empId = ?";
+		String roleQuery = "SELECT r.role FROM roles r INNER JOIN employees e on r.empid=e.empid WHERE r.empid = ? AND e.active IS TRUE";
 		PreparedStatement ps = conn.prepareStatement(roleQuery);
 		ps.setString(1, empId);
 

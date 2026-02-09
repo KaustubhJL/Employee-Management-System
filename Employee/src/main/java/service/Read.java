@@ -24,7 +24,7 @@ public class Read {
 		try {
 			String query = """
 					    SELECT empid, empname, empmail, empaddress, empdepartment
-					    FROM employees
+					    FROM employees WHERE active IS TRUE
 					""";
 
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -50,7 +50,7 @@ public class Read {
 			String query = """
 					    SELECT empid, empname, empmail, empaddress, empdepartment
 					    FROM employees
-					    WHERE empid = ?
+					    WHERE empid = ? AND active IS TRUE
 					""";
 
 			PreparedStatement ps = conn.prepareStatement(query);
@@ -77,7 +77,7 @@ public class Read {
 		try {
 			
 			ArrayList<String> roles = new ArrayList<>();
-			String roleQuery = "SELECT role FROM roles WHERE empid = ?";
+			String roleQuery = "SELECT role FROM roles WHERE empid = ? AND active IS TRUE";
 			try (PreparedStatement ps = conn.prepareStatement(roleQuery)) {
 			    ps.setString(1, id);
 			    ResultSet rs = ps.executeQuery();
@@ -89,7 +89,7 @@ public class Read {
 			String empQuery = """
 		            SELECT empid, empname, empmail, empaddress, empdepartment
 		            FROM employees
-		            WHERE empid = ?
+		            WHERE empid = ? AND active IS TRUE
 		        """;
 
 			PreparedStatement ps = conn.prepareStatement(empQuery);
