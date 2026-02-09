@@ -99,7 +99,7 @@ public final class Update {
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		System.out.print("New name: ");
 		String name=sc.nextLine();
-		if (name == null || name.trim().isEmpty())
+		if (name == null || name.trim().isEmpty() || name.matches(".*\\d.*"))
 			throw new InvalidDataException("Name cannot be empty");
 		ops.updateName(id, name);
 		return;

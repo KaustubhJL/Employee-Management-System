@@ -43,7 +43,6 @@ public class CrudImplementation implements CrudInterface {
 
 	public boolean employeeExists(String id) throws IdFormatWrongException {
 		ValidateId.validateId(id);
-
 		return EmployeeListOps.findById(id) != null;
 	}
 
@@ -119,26 +118,19 @@ public class CrudImplementation implements CrudInterface {
 		getExistingEmployee(id).setAddress(address);
 	}
 
-	public void updateDepartment(String id, String department)
-			throws EmployeeNotFoundException, IdFormatWrongException {
-
+	public void updateDepartment(String id, String department)throws EmployeeNotFoundException, IdFormatWrongException {
 		getExistingEmployee(id).setDepartment(department);
 	}
 
 	public void addRole(String id, String role) throws EmployeeNotFoundException, IdFormatWrongException {
-
 		Employee emp = getExistingEmployee(id);
 		emp.addRole(role);
-
 	}
 
 	public void revokeRole(String id, String role) throws EmployeeNotFoundException, IdFormatWrongException {
 		ValidateId.validateId(id);
 		Employee emp = getExistingEmployee(id);
-
-//		getExistingEmployee(id).getRole().remove(role);
 		emp.removeRole(role);
-
 	}
 
 	public void updatePassword(String id, String newPassword)

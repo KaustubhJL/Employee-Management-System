@@ -61,7 +61,6 @@ public class MainMenu {
 		File file = new File(FILE_PATH);
 
 		try {
-			
 
 			if (file.exists() && file.length() > 0) {
 				List<Employee> list = mapper.readValue(file, new TypeReference<List<Employee>>() {
@@ -106,7 +105,7 @@ public class MainMenu {
 		 */
 
 		MakeConnection db = new MakeConnection();
-		Connection conn = db.connect_to_db("db.gngwzkdvmixpgvkxknpf.supabase.co","postgres?sslmode=require", "postgres", "tektalisPASS123$");
+		Connection conn = db.connect_to_db("localhost","crudoperations", "postgres", "pass");
 
 		if (conn == null) {
 			System.out.println("Database connection failed.");
