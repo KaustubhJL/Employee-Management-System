@@ -10,23 +10,24 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import dao.CrudImplementation;
 import dao.EmployeeListOps;
 import model.Employee;
 
 public class LoginAndAccess {
-	private static final Logger logger = LogManager.getLogger(LoginAndAccess.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginAndAccess.class);
 	
 	public static void authenticateInFile(CrudImplementation ops, Scanner sc) {
 
 		Console console = System.console();
+		int attempts=0;
+		final int max_attempts=3;
 
-		while (true) {
+		while (attempts<max_attempts) {
 			System.out.print("ID: ");
 			String id = sc.nextLine();
-
 			char[] passChars;
 			if (console != null) {
 				passChars = console.readPassword("Password: ");
@@ -42,26 +43,51 @@ public class LoginAndAccess {
 
 			if (emp != null) {
 				PasswordMethods.setLoginContext(emp.getId(), emp.getRole());
-				logger.info("Login successful\n");
+				System.out.println("Login successful. Employee ID: "+emp.getId()+", Role: "+emp.getRole());
+				logger.info("Login successful. Employee ID: {}, Role: {}", emp.getId(), emp.getRole());
 				return;
 			}
-
-			logger.warn("Check details and try again.");
+			attempts++;
+//			System.out.println("Invalid ID or Password. Try again.");
 		}
+	    System.out.println("Maximum login attempts exceeded. Exiting program.");
+	    logger.error("Exiting program. Max login attempts reached.");
+	    System.exit(0);
 	}
 
+//	private static Employee accessCheckFile(CrudImplementation ops, String empID, String pass) {
+//		for (Employee e : EmployeeListOps.findAll()) {
+//			if (e.getId().equals(empID) && BCrypt.checkpw(pass, e.getPassword())) {
+//				return e;
+//			}
+//		}
+//		return null;
+//	}
+	
 	private static Employee accessCheckFile(CrudImplementation ops, String empID, String pass) {
 		for (Employee e : EmployeeListOps.findAll()) {
-			if (e.getId().equals(empID) && BCrypt.checkpw(pass, e.getPassword())) {
+			if (e.getId().equals(empID)) {
+				if(BCrypt.checkpw(pass, e.getPassword())) {
 				return e;
+				}
+				else {
+					System.out.println("Invalid password. Please try again.");
+					logger.warn("Invalid password. Please try again.");
+		                return null;
+				}
 			}
 		}
+		logger.warn("Invalid Employee ID. Please try again.");
+		System.out.println("Inavlid Employee ID. Please try again");
 		return null;
 	}
 
 	public static boolean authenticateInDB(Connection conn, Scanner sc) {
-
-		while (true) {
+		
+		int attempts = 0;
+	    final int max_attempts = 3;
+	    
+		while (attempts<max_attempts) {
 			System.out.print("Enter Your ID: ");
 			String empId = sc.nextLine();
 
@@ -76,26 +102,36 @@ public class LoginAndAccess {
 				ResultSet rs = ps.executeQuery();
 
 				if (!rs.next()) {
+					attempts++;
 					logger.warn("Invalid Employee ID. Please try again.");
+					System.out.println("Inavlid Employee ID. Please try again");
 					continue;
 				}
 
 				String storedHash = rs.getString("empPassword");
 
 				if (!BCrypt.checkpw(password, storedHash)) {
+					attempts++;
+					System.out.println("Invalid password. Please try again.");
 					logger.warn("Invalid password. Please try again.");
 					continue;
 				}
 				List<String> roles = fetchRoles(conn, empId);
 				PasswordMethods.setLoginContext(empId, roles);
 
-				logger.info("Login successful!");
+				logger.info("Login successful. Employee ID: {}, Roles: {}", empId, String.join(", ", roles));
 				return true;
 
 			} catch (Exception e) {
+				attempts++;
+				System.out.println("Login failed. Try again");
 				logger.warn("Login Failed. " + e.getMessage());
 			}
 		}
+		System.out.println("Maximum login attempts exceeded. Exiting program.");
+		logger.error("Maximum login attempts exceeded. Exiting program.");
+		System.exit(0);
+		return false;
 	}
 
 	private static List<String> fetchRoles(Connection conn, String empId) throws Exception {

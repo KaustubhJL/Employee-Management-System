@@ -5,8 +5,8 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,7 +23,7 @@ import util.ValidateMail;
 import util.ValidateName;
 
 public final class Update {
-	private static final Logger logger = LogManager.getLogger(Update.class);
+	private static final Logger logger = LoggerFactory.getLogger(Update.class);
 
 	private Update() {
 	}
@@ -33,7 +33,7 @@ public final class Update {
 
 		if (EmployeeListOps.isEmpty()) {
 			logger.warn("There are no employees at the moment, add data first.");
-//			System.out.println("Add data before updation");
+			System.out.println("Add data before updation");
 			return;
 		}
 
@@ -53,7 +53,7 @@ public final class Update {
 
 			if (!ops.employeeExists(targetId)) {
 				logger.warn("Employee not found!");
-//				System.out.println("Employee not found!");
+				System.out.println("Employee not found!");
 				return;
 			}
 		}
@@ -76,7 +76,8 @@ public final class Update {
 				sc.nextLine();
 			} catch (Exception e) {
 				sc.nextLine();
-				logger.warn("Invalid input, enter a number.");
+				logger.warn("Invalid input, need to enter a number.");
+				System.out.println("Invalid input, enter a number.");
 				continue;
 			}
 
@@ -87,10 +88,11 @@ public final class Update {
 			case 4 -> updateAddress(ops, sc, targetId);
 			case 5 -> updateDepartment(ops, sc, targetId);
 			case 6 -> updateRole(ops, sc, targetId);
-			default -> logger.warn("Invalid choice selected for update: {}", ch);
+			default -> System.out.println("Invalid choice selected for update: "+ ch);
 			}
 
 			SaveEmployeesToFile.saveToJson(mapper, file);
+			System.out.println("Updated employee data for ID "+targetId);
 			logger.info("Updated employee data for ID {}", targetId);
 			ops.showAll().forEach(System.out::println);
 			break;
@@ -112,6 +114,7 @@ public final class Update {
 		String name = sc.nextLine();
 		ValidateName.validateName(name);
 		ops.updateName(id, name);
+		System.out.println("Updated name for employee ID "+id+" : "+ name);
 		logger.info("Updated name for employee ID {}: {}", id, name);
 		return;
 	}
@@ -122,6 +125,7 @@ public final class Update {
 		String mail = sc.nextLine();
 		ValidateMail.validateMail(mail);
 		ops.updateMail(id, mail);
+		System.out.println("Updated mail for employee ID "+id+" : "+mail);
 		logger.info("Updated mail for employee ID {}: {}", id, mail);
 		return;
 	}
@@ -132,6 +136,7 @@ public final class Update {
 		String address = sc.nextLine();
 		ValidateAddress.validateAddress(address);
 		ops.updateAddress(id, address);
+		System.out.println("Updated address for employee ID "+id+" : "+address);
 		logger.info("Updated address for employee ID {}: {}", id, address);
 		return;
 	}
@@ -142,6 +147,7 @@ public final class Update {
 		String department = sc.nextLine();
 		ValidateDepartment.validateDepartment(department);
 		ops.updateDepartment(id, department);
+		System.out.println("Updated department for employee ID "+id+" : "+department);
 		logger.info("Updated department for employee ID {}: {}", id, department);
 		return;
 	}
@@ -163,11 +169,14 @@ public final class Update {
 
 		if (ch == 1) {
 			ops.addRole(id, role.name());
+			System.out.println("Added role "+role +" to employee ID "+id);
 			logger.info("Added role {} to employee ID {}", role, id);
 		} else if (ch == 2) {
 			ops.revokeRole(id, role.name());
+			System.out.println("Revoked role "+ role +" to employee ID "+id);
 			logger.info("Revoked role {} from employee ID {}", role, id);
 		} else {
+			System.out.println("Invalid role operation choice: "+ ch);
 			logger.warn("Invalid role operation choice: {}", ch);
 		}
 		return;
@@ -199,6 +208,7 @@ public final class Update {
 				break;
 			}
 		} catch (Exception e) {
+			System.out.println("Invalid choice.");
 			logger.warn("Error: " + e.getMessage());
 		}
 		return;
@@ -220,6 +230,7 @@ public final class Update {
 			sc.nextLine();
 			
 			if (who != 1 && who != 2) {
+				System.out.println("Invalid selection. Select 1 or 2.");
 			    logger.warn("Invalid selection");
 			    return;
 			}
@@ -231,6 +242,7 @@ public final class Update {
 				targetId = sc.nextLine();
 
 				if (!ops.employeeExistsDB(targetId)) {
+					System.out.println("Employee not found!");
 					logger.warn("Employee not found!");
 					return;
 				}
@@ -253,6 +265,7 @@ public final class Update {
 					sc.nextLine();
 				} catch (Exception e) {
 					sc.nextLine();
+					System.out.println("Invalid input, enter a number 1-6.");
 					logger.warn("Invalid input, enter a number.");
 					continue;
 				}
@@ -264,12 +277,13 @@ public final class Update {
 				case 4 -> updateAddressDB(ops, sc, targetId);
 				case 5 -> updateDepartmentDB(ops, sc, targetId);
 				case 6 -> updateRoleDB(ops, sc, targetId);
-				default -> logger.warn("Invalid choice selected for update: {}", ch);
+				default -> System.out.println("Invalid choice selected for update: "+ ch);
 				}
 				break;
 			}
 		} catch (Exception e) {
-			logger.warn("Enter the correct number.");
+			System.out.println("Error updating data.");
+			logger.warn("Erroe updating data.");
 		}
 	}
 
@@ -286,6 +300,7 @@ public final class Update {
 		String name = sc.nextLine();
 		ValidateName.validateName(name);
 		ops.updateNameDB(id, name);
+		System.out.println("Updated name for employee ID "+id+" : "+name);
 		logger.info("Updated name for employee ID {}: {}", id, name);
 		return;
 	}
@@ -295,6 +310,7 @@ public final class Update {
 		String mail = sc.nextLine();
 		ValidateMail.validateMail(mail);
 		ops.updateMailDB(id, mail);
+		System.out.println("Updated mail for employee ID "+id+" : "+mail);
 		logger.info("Updated mail for employee ID {}: {}", id, mail);
 		return;
 	}
@@ -304,6 +320,7 @@ public final class Update {
 		String address = sc.nextLine();
 		ValidateAddress.validateAddress(address);
 		ops.updateAddressDB(id, address);
+		System.out.println("Updated address for employee ID "+id+" : "+address);
 		logger.info("Updated address for employee ID {}: {}", id, address);
 		return;
 	}
@@ -313,6 +330,7 @@ public final class Update {
 		String department = sc.nextLine();
 		ValidateDepartment.validateDepartment(department);
 		ops.updateDepartmentDB(id, department);
+		System.out.println("Updated department for employee ID "+id+" : "+department);
 		logger.info("Updated department for employee ID {}: {}", id, department);
 		return;
 	}
@@ -333,11 +351,14 @@ public final class Update {
 
 		if (ch == 1) {
 			ops.addRoleDB(id, role.name());
+			System.out.println("Added role "+role+" from employee ID "+id);
 			logger.info("Added role {} to employee ID {}", role, id);
 		} else if (ch == 2) {
 			ops.revokeRoleDB(id, role.name());
+			System.out.println("Revoked role "+role+" from employee ID "+id);
 			logger.info("Revoked role {} from employee ID {}", role, id);
 		} else {
+			System.out.println("Invalid choice");
 			logger.warn("Invalid choice");
 		}
 		return;
@@ -365,12 +386,15 @@ public final class Update {
 				break;
 
 			default:
+				System.out.println("Invalid choice");
 				logger.warn("Invalid choice");
 				break;
 			}
 		} catch (InvalidDataException e) {
+			System.out.println("Invalid data."+e.getMessage());
 			logger.warn("Invalid data: " + e.getMessage());
 		} catch (Exception e) {
+			System.out.println("Error updating data."+e.getMessage());
 			logger.warn("Error updating data: " + e.getMessage());
 		}
 		return;

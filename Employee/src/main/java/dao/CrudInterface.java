@@ -49,5 +49,8 @@ public interface CrudInterface {
 	void deleteDB(String id);
 	void updatePasswordDB(String id, String password);
 	void revokeRoleDB(String id, String role);
+	List<Employee> showAllDB() throws EmployeeNotFoundException, IdFormatWrongException, SQLException;
+	Employee showOneDB(String id) throws EmployeeNotFoundException, IdFormatWrongException, SQLException;
+	Employee showSelfDB(String id) throws SQLException;
 	
 }

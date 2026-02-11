@@ -14,6 +14,7 @@ import enums.AdminChoices;
 import service.Create;
 import service.Delete;
 import service.PasswordMethods;
+import service.Read;
 import service.Update;
 
 public class AdminMenu {
@@ -26,9 +27,15 @@ public class AdminMenu {
 
 		do {
 			System.out.println("\n--- ADMIN MENU ---");
-			for (AdminChoices c : AdminChoices.values()) {
-				System.out.println(c);
-			}
+			System.out.println("ADD");
+			System.out.println("UPDATE");
+			System.out.println("DELETE");
+			System.out.println("SHOW_ALL");
+			System.out.println("MY_DETAILS");
+			System.out.println("CHANGE_PASSWORD");
+			System.out.println("RESET_PASSWORD");
+			System.out.println("EXIT");
+
 			System.out.print("Your choice: ");
 
 			try {
@@ -95,9 +102,15 @@ public class AdminMenu {
 
 		do {
 			System.out.println("\n--- ADMIN MENU ---");
-			for (AdminChoices c : AdminChoices.values()) {
-				System.out.println(c);
-			}
+			System.out.println("ADD");
+			System.out.println("UPDATE");
+			System.out.println("DELETE");
+			System.out.println("SHOW_ALL");
+			System.out.println("MY_DETAILS");
+			System.out.println("INACTIVE_USERS");
+			System.out.println("CHANGE_PASSWORD");
+			System.out.println("RESET_PASSWORD");
+			System.out.println("EXIT");
 			System.out.print("Your choice: ");
 
 			try {
@@ -123,11 +136,17 @@ public class AdminMenu {
 					break;
 
 				case SHOW_ALL:
-					ops.showAll().forEach(System.out::println);
+//					ops.showAll().forEach(System.out::println);
+					Read.readAllDB(conn).forEach(System.out::println);
 					break;
 
 				case MY_DETAILS:
-					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
+//					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
+					System.out.println(Read.readSelfDB(conn));
+					break;
+					
+				case INACTIVE_USERS:
+					Read.readInactive(conn).forEach(System.out::println);;
 					break;
 
 				case CHANGE_PASSWORD:

@@ -1,0 +1,51 @@
+2026-02-10 12:28:22,414 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful! - 
+2026-02-10 12:28:28,808 - service.Read - [readAll] - (INFO) - Employees data fetched - 
+2026-02-10 12:33:43,249 - service.LoginAndAccess - [authenticateInFile] - (INFO) - Login successful
+ - 
+2026-02-10 12:34:05,235 - service.Create - [handleAdd] - (INFO) - New employee added: id=TT26014, name=rochisna, department=dev, role=[Manager] - 
+2026-02-10 12:34:05,238 - service.Create - [handleAdd] - (INFO) - Password generated for new employee TT26014 - 
+2026-02-10 12:34:37,029 - service.LoginAndAccess - [authenticateInFile] - (INFO) - Login successful
+ - 
+2026-02-11 10:39:28,529 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-11 10:39:32,503 - service.Read - [readSelf] - (INFO) - Fetched self details for employee ID TT26001 - 
+2026-02-11 10:46:33,972 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-11 10:46:37,879 - service.Read - [readAll] - (INFO) - Employees data fetched - 
+2026-02-11 10:51:29,315 - service.LoginAndAccess - [authenticateInFile] - (INFO) - Login successful. Employee ID: TT25001, Role: [Admin, Employee, ADMIN] - 
+2026-02-11 10:53:31,732 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-11 10:53:35,290 - service.Read - [readSelf] - (INFO) - Fetched self details for employee ID TT26001 - 
+2026-02-11 10:53:45,365 - service.Read - [readInactive] - (ERROR) - Error fetching all employees: ERROR: syntax error at or near "FALE"
+  Position: 98 - 
+org.postgresql.util.PSQLException: ERROR: syntax error at or near "FALE"
+  Position: 98
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2725)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2412)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:371)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:502)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:419)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194)
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:137)
+	at service.Read.readInactive(Read.java:123)
+	at controller.AdminMenu.showDBMenu(AdminMenu.java:137)
+	at controller.MainMenu.DBMenu(MainMenu.java:127)
+	at controller.MainMenu.Menu(MainMenu.java:44)
+	at main.CrudAppMain.main(CrudAppMain.java:9)
+2026-02-11 10:53:52,023 - service.Read - [readAll] - (INFO) - Employees data fetched - 
+2026-02-11 10:56:30,414 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-11 10:56:34,860 - service.Read - [readInactive] - (INFO) - Inactive Employees data fetched - 
+2026-02-11 10:56:50,240 - service.Read - [readAll] - (INFO) - Employees data fetched - 
+2026-02-11 10:57:05,094 - service.Read - [readSelf] - (INFO) - Fetched self details for employee ID TT26001 - 
+2026-02-11 10:57:46,456 - service.LoginAndAccess - [authenticateInFile] - (INFO) - Login successful. Employee ID: TT25001, Role: [Admin, Employee, ADMIN] - 
+2026-02-11 12:46:27,983 - service.LoginAndAccess - [accessCheckFile] - (WARN) - Invalid password. Please try again. - 
+2026-02-11 12:46:37,990 - service.LoginAndAccess - [accessCheckFile] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:03,728 - service.LoginAndAccess - [accessCheckFile] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:06,263 - service.LoginAndAccess - [accessCheckFile] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:08,277 - service.LoginAndAccess - [accessCheckFile] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:08,278 - service.LoginAndAccess - [authenticateInFile] - (ERROR) - Exiting program. Max login attempts reached. - 
+2026-02-11 12:47:18,817 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:21,005 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:22,759 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:47:22,760 - service.LoginAndAccess - [authenticateInDB] - (ERROR) - Maximum login attempts exceeded. Exiting program. - 
+2026-02-11 12:48:26,733 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:48:28,297 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:48:29,644 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-11 12:48:29,645 - service.LoginAndAccess - [authenticateInDB] - (ERROR) - Maximum login attempts exceeded. Exiting program. - 

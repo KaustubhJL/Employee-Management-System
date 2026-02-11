@@ -54,7 +54,6 @@ public class CrudImplementation implements CrudInterface {
 		String hashedPassword = PasswordMethods.hash(password);
 
 		Employee emp = new Employee(id, name, mail, address, department, role, hashedPassword);
-
 		EmployeeListOps.save(emp);
 		return emp;
 	}
@@ -77,32 +76,33 @@ public class CrudImplementation implements CrudInterface {
 	        return EmployeeListOps.findAll();
 	    }
 
-	    List<Employee> list = Read.readAll(conn);
+	    List<Employee> list = Read.readAllDB(conn);
 	    if (list.isEmpty())
 	        throw new EmployeeNotFoundException("No employees");
 
 	    return list;
 	}
 
-	public Employee showOne(String id) throws EmployeeNotFoundException {
-
-		if (backend == ChooseBackend.FILE) {
-            Employee emp = EmployeeListOps.findById(id);
-            if (emp == null)
-                throw new EmployeeNotFoundException("Employee not found");
-            return emp;
-        }
-        return Read.readOne(conn, id);
-    }
+//	public Employee showOne(String id) throws EmployeeNotFoundException {
+//
+//		if (backend == ChooseBackend.FILE) {
+//            Employee emp = EmployeeListOps.findById(id);
+//            if (emp == null)
+//                throw new EmployeeNotFoundException("Employee not found");
+//            return emp;
+//        }
+//        return Read.readOne(conn, id);
+//    }
 	
 	public Employee showSelf(String id) throws EmployeeNotFoundException {
+//		String id=PasswordMethods.getLoggedInId();
 		if (backend == ChooseBackend.FILE) {
             Employee emp = EmployeeListOps.findById(id);
             if (emp == null)
                 throw new EmployeeNotFoundException("Employee not found");
             return emp;
         }
-        return Read.readSelf(conn, id);
+        return Read.readSelfDB(conn);
 	}
 	
 	public void updateName(String id, String name) throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
@@ -196,20 +196,10 @@ public class CrudImplementation implements CrudInterface {
 
 	public void deleteDB(String id) {
 		try {
-//			String deletePassword = "DELETE FROM passwords WHERE empId = ?";
-//			PreparedStatement psPass = conn.prepareStatement(deletePassword);
-//			psPass.setString(1, id);
-//
-//			String deleteRoles = "DELETE FROM roles WHERE empId = ?";
-//			PreparedStatement psRoles = conn.prepareStatement(deleteRoles);
-//			psRoles.setString(1, id);
 
 			String deleteEmployee = "UPDATE employees SET active = FALSE WHERE empid = ?";
 			PreparedStatement psEmp = conn.prepareStatement(deleteEmployee);
 			psEmp.setString(1, id);
-
-//			psPass.executeUpdate();
-//			psRoles.executeUpdate();
 			
 			int rowsDeleted = psEmp.executeUpdate();
 			if (rowsDeleted > 0) {
@@ -231,11 +221,7 @@ public class CrudImplementation implements CrudInterface {
 			ps.setString(1, name);
 			ps.setString(2, id);
 
-//			if (ps.executeUpdate() > 0) {
-//				System.out.println("Name of Employee " + id + " updated!");
-//			}
-
-			Read.readOne(conn, id);
+			Read.readOneDB(conn, id);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -255,7 +241,7 @@ public class CrudImplementation implements CrudInterface {
 //				System.out.println("Mail of Employee " + id + " updated!");
 //			}
 
-			Read.readOne(conn, id);
+			Read.readOneDB(conn, id);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -275,7 +261,7 @@ public class CrudImplementation implements CrudInterface {
 //				System.out.println("Address of Employee " + id + " updated!");
 //			}
 
-			Read.readOne(conn, id);
+			Read.readOneDB(conn, id);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -295,7 +281,7 @@ public class CrudImplementation implements CrudInterface {
 				System.out.println("Department of Employee " + id + " updated!");
 			}
 
-			Read.readOne(conn, id);
+			Read.readOneDB(conn, id);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -316,7 +302,7 @@ public class CrudImplementation implements CrudInterface {
 				System.out.println("Role "+role +" added to the Employee " + id );
 			}
 
-			Read.readOne(conn, id);
+			Read.readOneDB(conn, id);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -338,7 +324,7 @@ public class CrudImplementation implements CrudInterface {
 				System.out.println("Employee not found with id: " + id);
 			}
 
-			Read.readOne(conn, id);
+			Read.readOneDB(conn, id);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -369,4 +355,30 @@ public class CrudImplementation implements CrudInterface {
 			System.out.println("Failed to update password: " + e.getMessage());
 		}
 	}
+
+	@Override
+	public Employee showOne(String id) throws EmployeeNotFoundException, IdFormatWrongException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Employee> showAllDB() throws EmployeeNotFoundException, IdFormatWrongException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Employee showOneDB(String id) throws EmployeeNotFoundException, IdFormatWrongException, SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Employee showSelfDB(String id) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

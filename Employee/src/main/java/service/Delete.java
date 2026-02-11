@@ -3,9 +3,8 @@ package service;
 import java.io.File;
 
 import java.util.Scanner;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
@@ -17,7 +16,7 @@ import dao.SaveEmployeesToFile;
 import util.ValidateId;
 
 public class Delete {
-	private static final Logger logger = LogManager.getLogger(Delete.class);
+	private static final Logger logger = LoggerFactory.getLogger(Delete.class);
 
 	public static void handleDelete(CrudImplementation ops, Scanner sc, ObjectMapper mapper, File file)
 			throws EmployeeNotFoundException, IdFormatWrongException {
@@ -28,7 +27,7 @@ public class Delete {
 			ValidateId.validateId(id);
 
 			if (id.equals(PasswordMethods.getLoggedInId())) {
-				logger.warn("You Cannot delete your own records.");
+				System.out.println("You Cannot delete your own records.");
 				return;
 			}
 
@@ -36,11 +35,12 @@ public class Delete {
 			String confirm = sc.nextLine().trim().toLowerCase();
 
 			if (!confirm.equals("yes")) {
-				logger.info("Deletion cancelled.");
+				System.out.println("Deletion cancelled.");
 				return;
 			}
 			ops.delete(id);
 			SaveEmployeesToFile.saveToJson(mapper, file);
+			System.out.println("Employee "+ id +" has been deleted successfully.");
 			logger.info("Employee {} has been deleted successfully.", id);
 		} catch (Exception e) {
 			logger.warn("Error deleting employee: {}", e.getMessage(), e);
@@ -65,6 +65,7 @@ public class Delete {
 				return;
 			}
 			ops.deleteDB(id);
+			System.out.println("Employee "+ id +" has been deleted successfully.");
 			logger.info("Employee {} has been deleted successfully.", id);
 
 		} catch (Exception e) {

@@ -4,13 +4,13 @@ import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import enums.RoleChoice;
 
 public class RoleTableDB {
-	private static final Logger logger = LogManager.getLogger(RoleTableDB.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleTableDB.class);
 	public static void insertRole(Connection conn, String empid, RoleChoice role) {
 		try {
 		String roleQuery="INSERT INTO roles (empId,role) VALUES (?,?);";
@@ -21,7 +21,8 @@ public class RoleTableDB {
 		logger.info("The role {} added for employee {}" , role, empid);
 		}
 		catch (Exception e) {
-		    logger.error("Error adding role {} for employee {}", role, empid, e);
+			System.out.println("Error adding role "+role+"for employee "+empid +" : "+e.getMessage());
+		    logger.error("Error adding role {} for employee {}", role, empid,e.getMessage());
 		    throw new RuntimeException(e);
 		}
 	}

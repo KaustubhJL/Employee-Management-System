@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -17,7 +17,7 @@ import dao.CrudImplementation;
 import util.ValidateId;
 
 public class PasswordMethods {
-	private static final Logger logger = LogManager.getLogger(PasswordMethods.class);
+	private static final Logger logger = LoggerFactory.getLogger(PasswordMethods.class);
 
 	private static String loggedInID = null;
 	private static List<String> loggedInRoles = new ArrayList<>();
@@ -69,9 +69,11 @@ public class PasswordMethods {
 			String p2 = sc.nextLine().trim();
 
 			if (!p1.equals(p2)) {
+				System.out.println("Passwords do not match. Try again.");
 				logger.warn("Passwords do not match. Try again.");
 			} else {
 				ops.updatePassword(loggedInID, p1);
+				System.out.println("Password updated successfully!");
 				logger.info("Password updated successfully!");
 				break;
 			}
@@ -123,9 +125,11 @@ public class PasswordMethods {
 			String p2 = sc.nextLine().trim();
 
 			if (!p1.equals(p2)) {
+				System.out.println("Passwords do not match. Try again.");
 				logger.warn("Passwords do not match. Try again.");
 			} else {
 				ops.updatePasswordDB(loggedInID, p1);
+				System.out.println("Password updated successfully!");
 				logger.info("Password updated successfully!");
 				break;
 			}

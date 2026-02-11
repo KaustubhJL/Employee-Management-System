@@ -1,17 +1,18 @@
 package service;
 
 import java.io.File;
+//import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import customExceptions.EmployeeNotFoundException;
-import customExceptions.IdFormatWrongException;
+//import customExceptions.IdFormatWrongException;
 import customExceptions.InvalidDataException;
 import dao.CrudImplementation;
 import dao.SaveEmployeesToFile;
@@ -23,9 +24,9 @@ import util.ValidateMail;
 import util.ValidateName;
 
 public class Create {
-	private static final Logger logger = LogManager.getLogger(Create.class);
+	private static final Logger logger = LoggerFactory.getLogger(Create.class);
 	public static void handleAdd(CrudImplementation ops, Scanner sc, ObjectMapper mapper, File file)
-			throws EmployeeNotFoundException, IdFormatWrongException {
+			throws InvalidDataException {
 
 		try {
 			System.out.print("Enter name: ");
@@ -48,13 +49,19 @@ public class Create {
 			for (RoleChoice r : RoleChoice.values()) {
 				System.out.println(r);
 			}
-			RoleChoice choice = RoleChoice.valueOf(sc.nextLine().toUpperCase());
-
+			
+			RoleChoice choice;
+			try {
+	            choice = RoleChoice.valueOf(sc.nextLine().toUpperCase());
+	        } catch (IllegalArgumentException e) {
+	            throw new InvalidDataException("Invalid role selected");
+	        }
 			ArrayList<String> role = new ArrayList<>();
 			role.add(choice.name().charAt(0) + choice.name().substring(1).toLowerCase());
-
+			
 			String randomPasswordForNew = PasswordMethods.randomPasswordGenerator();
 			Employee newEmployee = ops.add(name, mail, address, department, role, randomPasswordForNew);
+			
 			SaveEmployeesToFile.saveToJson(mapper, file);
 			
 			logger.info("New employee added: id={}, name={}, department={}, role={}", 
@@ -62,6 +69,8 @@ public class Create {
                     newEmployee.getName(), 
                     newEmployee.getDepartment(), 
                     role);
+			System.out.println("New employee added!");
+			logger.info("Employee {} added",newEmployee.getId());
 			System.out.println("Generated password for new employee "+ newEmployee.getId()+ " is: "+ randomPasswordForNew);
 			logger.info("Password generated for new employee {}",newEmployee.getId());
 
@@ -100,8 +109,8 @@ public class Create {
 			String empId = ops.addDB(name, mail, address, department, choice);
 			PasswordTableDB.insertPassword(conn, empId, password);
 
-//			System.out.println("New user added!");
-			logger.info("New employee added: {}" ,ops.showOne(empId));
+			System.out.println("New employee added!");
+			logger.info("New employee added: {}" ,Read.readOneDB(conn,empId));
 			System.out.println("Generated password for new employee "+empId+" is: "+ password);
 			logger.info("Password generated for new employee {}",empId);
 

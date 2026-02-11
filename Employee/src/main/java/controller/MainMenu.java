@@ -72,6 +72,7 @@ public class MainMenu {
 
 			LoginAndAccess.authenticateInFile(ops, sc);
 
+			
 			if (PasswordMethods.hasRole("Admin")) {
 				AdminMenu.showMenu(ops, sc, mapper, file);
 
