@@ -49,3 +49,55 @@ org.postgresql.util.PSQLException: ERROR: syntax error at or near "FALE"
 2026-02-11 12:48:28,297 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
 2026-02-11 12:48:29,644 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
 2026-02-11 12:48:29,645 - service.LoginAndAccess - [authenticateInDB] - (ERROR) - Maximum login attempts exceeded. Exiting program. - 
+2026-02-12 11:08:35,823 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:09:08,185 - service.Update - [handleUpdateDB] - (WARN) - Erroe updating data. - 
+2026-02-12 11:09:28,576 - service.Update - [handleUpdateDB] - (WARN) - Erroe updating data. - 
+2026-02-12 11:09:54,258 - service.Update - [handleUpdateDB] - (WARN) - Erroe updating data. - 
+2026-02-12 11:10:21,875 - service.Update - [handleUpdateDB] - (WARN) - Erroe updating data. - 
+2026-02-12 11:10:36,444 - service.Read - [readAllDB] - (INFO) - Employees data fetched - 
+2026-02-12 11:11:54,629 - service.Delete - [handleDeleteDB] - (WARN) - Error deleting employee: Cannot invoke "dao.CrudImplementation.deleteDB(String)" because "ops" is null - 
+java.lang.NullPointerException: Cannot invoke "dao.CrudImplementation.deleteDB(String)" because "ops" is null
+	at service.Delete.handleDeleteDB(Delete.java:67)
+	at controller.AdminMenu.showDBMenu(AdminMenu.java:135)
+	at controller.MainMenu.DBMenu(MainMenu.java:124)
+	at controller.MainMenu.Menu(MainMenu.java:45)
+	at main.CrudAppMain.main(CrudAppMain.java:9)
+2026-02-12 11:12:01,039 - service.Read - [readAllDB] - (INFO) - Employees data fetched - 
+2026-02-12 11:23:19,346 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:23:32,386 - service.Update - [handleUpdateDB] - (WARN) - Erroe updating data. - 
+2026-02-12 11:24:52,131 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:25:01,002 - service.Update - [handleUpdateDB] - (WARN) - ErroR updating data. - 
+2026-02-12 11:27:28,013 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:27:34,597 - service.Update - [handleUpdateDB] - (WARN) - Error updating data. - 
+2026-02-12 11:28:42,662 - service.LoginAndAccess - [authenticateInDB] - (WARN) - Invalid Employee ID. Please try again. - 
+2026-02-12 11:28:48,097 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:29:03,469 - service.Update - [handleUpdateDB] - (WARN) - Error updating data. - 
+2026-02-12 11:34:21,578 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:34:38,931 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:34:38,934 - service.Update - [updateNameDB] - (INFO) - Updated name for employee ID TT26004: Shanmuk - 
+2026-02-12 11:34:48,478 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:34:48,478 - service.Update - [updateMailDB] - (INFO) - Updated mail for employee ID TT26004: shan@gmail.commm - 
+2026-02-12 11:34:53,780 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:34:53,781 - service.Update - [updateAddressDB] - (INFO) - Updated address for employee ID TT26004: hyd - 
+2026-02-12 11:35:21,146 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:35:21,148 - service.Update - [updateDepartmentDB] - (INFO) - Updated department for employee ID TT26004: dev - 
+2026-02-12 11:35:32,409 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:35:32,411 - service.Update - [updateRoleDB] - (INFO) - Added role EMPLOYEE to employee ID TT26004 - 
+2026-02-12 11:35:46,038 - service.Read - [readAllDB] - (INFO) - Employees data fetched - 
+2026-02-12 11:48:44,440 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:48:56,670 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:48:56,672 - service.Update - [updateNameDB] - (INFO) - Updated name for employee ID TT26004: SHANMUK - 
+2026-02-12 11:49:07,090 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:49:07,092 - service.Update - [updateMailDB] - (INFO) - Updated mail for employee ID TT26004: SHAN@123 - 
+2026-02-12 11:49:14,867 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:49:14,867 - service.Update - [updateAddressDB] - (INFO) - Updated address for employee ID TT26004: hyd - 
+2026-02-12 11:49:19,783 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:49:19,783 - service.Update - [updateDepartmentDB] - (INFO) - Updated department for employee ID TT26004: dev - 
+2026-02-12 11:49:23,369 - service.Read - [readOneDB] - (INFO) - Fetched employee with ID TT26004 - 
+2026-02-12 11:49:23,369 - service.Update - [updateRoleDB] - (INFO) - Added role ADMIN to employee ID TT26004 - 
+2026-02-12 11:49:44,902 - service.Read - [readSelfDB] - (INFO) - Fetched self details for employee ID TT26001 - 
+2026-02-12 11:50:01,065 - service.Delete - [handleDeleteDB] - (INFO) - Employee TT26004 has been deleted successfully. - 
+2026-02-12 11:52:06,268 - service.LoginAndAccess - [authenticateInDB] - (INFO) - Login successful. Employee ID: TT26001, Roles: Admin - 
+2026-02-12 11:52:10,997 - service.Read - [readAllDB] - (INFO) - Employees data fetched - 
+2026-02-12 11:52:17,798 - service.Read - [readInactive] - (INFO) - Inactive Employees data fetched - 
+2026-02-12 11:53:08,567 - service.Create - [handleAddDB] - (WARN) - Invalid input: Invalid email format - 

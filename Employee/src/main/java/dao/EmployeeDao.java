@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.SQLException;
-//import manager.Manage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import customExceptions.InvalidDataException;
 import enums.RoleChoice;
 import model.Employee;
 
-public interface CrudInterface {
+public interface EmployeeDao {
 	
 	Employee add(String name, String mail, String address, String department, ArrayList<String> role, String password)
 			throws InvalidDataException;
@@ -51,6 +50,6 @@ public interface CrudInterface {
 	void revokeRoleDB(String id, String role);
 	List<Employee> showAllDB() throws EmployeeNotFoundException, IdFormatWrongException, SQLException;
 	Employee showOneDB(String id) throws EmployeeNotFoundException, IdFormatWrongException, SQLException;
-	Employee showSelfDB(String id) throws SQLException;
+	Employee showSelfDB() throws SQLException;
 	
 }

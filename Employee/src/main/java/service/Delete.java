@@ -52,8 +52,9 @@ public class Delete {
 			System.out.print("Enter the Employee ID to delete: ");
 			String id = sc.nextLine();
 
-			if (id == PasswordMethods.getLoggedInId()) {
-				logger.warn("You Cannot delete your own records.");
+			if (id.equals(PasswordMethods.getLoggedInId())) {
+				System.out.println("You Cannot delete your own records.");
+//				logger.warn("You Cannot delete your own records.");
 				return;
 			}
 
@@ -65,7 +66,7 @@ public class Delete {
 				return;
 			}
 			ops.deleteDB(id);
-			System.out.println("Employee "+ id +" has been deleted successfully.");
+//			System.out.println("Employee "+ id +" has been deleted successfully.");
 			logger.info("Employee {} has been deleted successfully.", id);
 
 		} catch (Exception e) {

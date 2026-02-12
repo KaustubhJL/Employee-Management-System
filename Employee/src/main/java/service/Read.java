@@ -64,7 +64,7 @@ public class Read {
 				logger.warn("Employee with ID {} not found", id);
 				return null;
 			}
-			System.out.println("Fetched employee with ID "+ id);
+//			System.out.println("Fetched employee with ID "+ id);
 			logger.info("Fetched employee with ID {}", id);
 			return new Employee(rs.getString("empid"), rs.getString("empname"), rs.getString("empmail"),
 					rs.getString("empaddress"), rs.getString("empdepartment"), new ArrayList<>(), null);

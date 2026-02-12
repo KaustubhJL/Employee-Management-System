@@ -110,51 +110,78 @@ public final class Update {
 
 	private static void updateName(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+		while (true) {
+			try {
 		System.out.print("New name: ");
 		String name = sc.nextLine();
 		ValidateName.validateName(name);
 		ops.updateName(id, name);
 		System.out.println("Updated name for employee ID "+id+" : "+ name);
 		logger.info("Updated name for employee ID {}: {}", id, name);
+		break;
+			} catch (InvalidDataException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		return;
 	}
 
 	private static void updateMail(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+		while (true) {
+			try {
 		System.out.print("New mail: ");
 		String mail = sc.nextLine();
 		ValidateMail.validateMail(mail);
 		ops.updateMail(id, mail);
 		System.out.println("Updated mail for employee ID "+id+" : "+mail);
 		logger.info("Updated mail for employee ID {}: {}", id, mail);
+		break;
+			} catch (InvalidDataException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		return;
 	}
 
 	private static void updateAddress(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+		while (true) {
+			try {
 		System.out.print("New address: ");
 		String address = sc.nextLine();
 		ValidateAddress.validateAddress(address);
 		ops.updateAddress(id, address);
 		System.out.println("Updated address for employee ID "+id+" : "+address);
 		logger.info("Updated address for employee ID {}: {}", id, address);
+		break;
+	} catch (InvalidDataException e) {
+		System.out.println(e.getMessage());
+	}
+}
 		return;
 	}
 
 	private static void updateDepartment(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+		while (true) {
+			try {
 		System.out.print("New department: ");
 		String department = sc.nextLine();
 		ValidateDepartment.validateDepartment(department);
 		ops.updateDepartment(id, department);
 		System.out.println("Updated department for employee ID "+id+" : "+department);
 		logger.info("Updated department for employee ID {}: {}", id, department);
+		break;
+	} catch (InvalidDataException e) {
+		System.out.println(e.getMessage());
+	}
+}
 		return;
 	}
 
 	private static void updateRole(CrudImplementation ops, Scanner sc, String id)
 			throws EmployeeNotFoundException, IdFormatWrongException {
-
 		System.out.println("1. Add role");
 		System.out.println("2. Revoke role");
 		int ch = sc.nextInt();
@@ -165,6 +192,7 @@ public final class Update {
 		}
 		System.out.println("Your choice: ");
 
+		System.out.println("Choose a role: ");
 		RoleChoice role = RoleChoice.valueOf(sc.nextLine().toUpperCase());
 
 		if (ch == 1) {
@@ -283,7 +311,7 @@ public final class Update {
 			}
 		} catch (Exception e) {
 			System.out.println("Error updating data.");
-			logger.warn("Erroe updating data.");
+			logger.warn("Error updating data.");
 		}
 	}
 
@@ -300,7 +328,7 @@ public final class Update {
 		String name = sc.nextLine();
 		ValidateName.validateName(name);
 		ops.updateNameDB(id, name);
-		System.out.println("Updated name for employee ID "+id+" : "+name);
+//		System.out.println("Updated name for employee ID "+id+" : "+name);
 		logger.info("Updated name for employee ID {}: {}", id, name);
 		return;
 	}
@@ -310,7 +338,7 @@ public final class Update {
 		String mail = sc.nextLine();
 		ValidateMail.validateMail(mail);
 		ops.updateMailDB(id, mail);
-		System.out.println("Updated mail for employee ID "+id+" : "+mail);
+//		System.out.println("Updated mail for employee ID "+id+" : "+mail);
 		logger.info("Updated mail for employee ID {}: {}", id, mail);
 		return;
 	}
@@ -320,7 +348,7 @@ public final class Update {
 		String address = sc.nextLine();
 		ValidateAddress.validateAddress(address);
 		ops.updateAddressDB(id, address);
-		System.out.println("Updated address for employee ID "+id+" : "+address);
+//		System.out.println("Updated address for employee ID "+id+" : "+address);
 		logger.info("Updated address for employee ID {}: {}", id, address);
 		return;
 	}
@@ -330,7 +358,7 @@ public final class Update {
 		String department = sc.nextLine();
 		ValidateDepartment.validateDepartment(department);
 		ops.updateDepartmentDB(id, department);
-		System.out.println("Updated department for employee ID "+id+" : "+department);
+//		System.out.println("Updated department for employee ID "+id+" : "+department);
 		logger.info("Updated department for employee ID {}: {}", id, department);
 		return;
 	}
@@ -351,11 +379,11 @@ public final class Update {
 
 		if (ch == 1) {
 			ops.addRoleDB(id, role.name());
-			System.out.println("Added role "+role+" from employee ID "+id);
+//			System.out.println("Added role "+role+" from employee ID "+id);
 			logger.info("Added role {} to employee ID {}", role, id);
 		} else if (ch == 2) {
 			ops.revokeRoleDB(id, role.name());
-			System.out.println("Revoked role "+role+" from employee ID "+id);
+//			System.out.println("Revoked role "+role+" from employee ID "+id);
 			logger.info("Revoked role {} from employee ID {}", role, id);
 		} else {
 			System.out.println("Invalid choice");

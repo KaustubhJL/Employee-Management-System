@@ -21,6 +21,7 @@ import service.LoginAndAccess;
 public class MainMenu {
 	private static final String FILE_PATH = "employees_data.json";
 	static Scanner sc = new Scanner(System.in);
+	static CrudImplementation ops;
 
 	public static void Menu() {
 		ChooseBackend ch = null;
@@ -56,8 +57,6 @@ public class MainMenu {
 	}
 
 	public static void FileMenu() {
-
-		CrudImplementation ops = new CrudImplementation(ChooseBackend.FILE, null);
 
 		ObjectMapper mapper = new ObjectMapper();
 		File file = new File(FILE_PATH);
@@ -101,7 +100,6 @@ public class MainMenu {
 		 * user: "postgres" password: "tektalisPASS123$"
 		 * 
 		 */
-
 		MakeConnection db = new MakeConnection();
 		Connection conn = null;
 
@@ -116,8 +114,8 @@ public class MainMenu {
 			System.out.println("Database connection failed.");
 			return;
 		}
-
-		CrudImplementation ops = new CrudImplementation(ChooseBackend.DB, conn);
+		
+		ops=new CrudImplementation(conn);
 
 		try {
 
