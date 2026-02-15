@@ -13,28 +13,27 @@ import service.PasswordMethods;
 
 public class TestFormats {
 
+	private Employee emp;
 
-    private Employee emp;
-    
 	@BeforeEach
-    void setUp() {
-        emp = new Employee("TT26001",
-    			"Rineesha","rin@gmail.com","hyd","Admin",new ArrayList<>
-    	(List.of("Admin","Manager")),PasswordMethods.randomPasswordGenerator());
-    }
+	void setUp() {
+		emp = new Employee("TT26001", "Rineesha", "rin@gmail.com", "hyd", "Admin",
+				new ArrayList<>(List.of("Admin", "Manager")), PasswordMethods.randomPasswordGenerator());
+	}
 
-	 @Test
-	    void testMailFormat() {
-	        assertTrue(emp.getMail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"));
-	    }
-	 
-	 @Test
-	    void testEmployeeRole() {
-	        assertEquals("ADMIN", emp.getRole());
-	    }
-	 @Test
-	    void testEmployeeId() {
-	        assertEquals("TT26004", emp.getId());
-	    }
-	
+	@Test
+	void testMailFormat() {
+		assertTrue(emp.getMail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"));
+	}
+
+	@Test
+	void testEmployeeRole() {
+		assertEquals("ADMIN", emp.getRole());
+	}
+
+	@Test
+	void testEmployeeId() {
+		assertEquals("TT26004", emp.getId());
+	}
+
 }

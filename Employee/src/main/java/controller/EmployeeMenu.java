@@ -21,7 +21,10 @@ import util.SaveEmployeesToFile;
 
 public class EmployeeMenu {
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeMenu.class);
-	private EmployeeMenu() {}
+
+	private EmployeeMenu() {
+	}
+
 	public static void showMenu(CrudFileImplementation ops, Scanner sc, ObjectMapper mapper, File file) {
 
 		EmployeeChoices choice = null;
@@ -48,7 +51,7 @@ public class EmployeeMenu {
 					break;
 
 				case MY_DETAILS:
-					System.out.println(Read.handleReadOne(ops,LoginAndAccess.getLoggedInId()));
+					System.out.println(Read.handleReadOne(ops, LoginAndAccess.getLoggedInId()));
 					break;
 
 				case CHANGE_PASSWORD:
@@ -72,9 +75,7 @@ public class EmployeeMenu {
 
 		} while (choice != EmployeeChoices.EXIT);
 	}
-	
-	
-	
+
 	public static void showDBMenu(CrudDBImplementation dbops, Scanner sc, Connection conn) {
 
 		EmployeeChoices choice = null;
@@ -109,7 +110,7 @@ public class EmployeeMenu {
 					break;
 
 				case EXIT:
-					conn=null;
+					conn = null;
 					System.out.println("Employee logged out.");
 					logger.info("Employee {} logged out.", LoginAndAccess.getLoggedInId());
 					LoginAndAccess.clearLoginContext();

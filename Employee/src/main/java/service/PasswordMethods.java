@@ -1,6 +1,7 @@
 package service;
 
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,7 @@ public class PasswordMethods {
 		}
 	}
 
-	public static void updatePasswordDB(CrudDBImplementation dbops, Scanner sc) {
+	public static void updatePasswordDB(CrudDBImplementation dbops, Scanner sc) throws SQLException {
 //		ensureLoggedIn();
 
 		while (true) {
@@ -102,16 +103,21 @@ public class PasswordMethods {
 				System.out.println("Passwords do not match. Try again.");
 				logger.warn("Passwords do not match. Try again.");
 			} else {
-				dbops.updatePasswordDB(LoginAndAccess.getLoggedInId(), p1);
-				System.out.println("Password updated successfully!");
-				logger.info("Password updated successfully!");
-				break;
+				boolean updated = dbops.updatePasswordDB(LoginAndAccess.getLoggedInId(), p1);
+				if (updated) {
+					System.out.println("Password updated successfully!");
+					logger.info("Password updated successfully!");
+					break;
+				} else {
+					System.out.println("Password update failed. Employee may be inactive or ID invalid.");
+					logger.warn("Password update failed for employee {}", LoginAndAccess.getLoggedInId());
+				}
 			}
 		}
 	}
 
 	public static void resetPasswordDB(CrudDBImplementation dbops, Scanner sc)
-			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException, SQLException {
 //		ensureLoggedIn();
 
 		System.out.println("Enter 1 to Reset Your Password");
@@ -134,10 +140,13 @@ public class PasswordMethods {
 			ValidateId.validateId(selectedID);
 			String newPass = randomPasswordGenerator();
 			dbops.updatePasswordDB(selectedID, newPass);
-			System.out.println("The new password for employee " + selectedID + "is: " + newPass);
+			System.out.println("The new password for employee " + selectedID + " is: " + newPass);
 			logger.info("Password of employee {} updated", selectedID);
 		}
-		default -> logger.warn("Invalid choice");
+		default -> {
+			System.out.println("Invalid choice. Please select 1 or 2.");
+			logger.warn("Invalid choice in password reset menu");
+			}
 		}
 	}
 

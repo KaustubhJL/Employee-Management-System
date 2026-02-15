@@ -38,4 +38,20 @@
   "department" : "HR",
   "role" : [ "Admin" ],
   "password" : "-C=oYd7@%PS="
+}, {
+  "id" : "TT26006",
+  "name" : "Rineesha",
+  "mail" : "rin@gmail.com",
+  "address" : "hyd",
+  "department" : "Admin",
+  "role" : [ "Admin", "Manager" ],
+  "password" : "h$S3x#S!$7=i"
+}, {
+  "id" : "TT26001",
+  "name" : "Charlie",
+  "mail" : "charlie@gmail.com",
+  "address" : "SF",
+  "department" : "HR",
+  "role" : [ "Admin" ],
+  "password" : "9VXrVUilhW*2"
 } ]

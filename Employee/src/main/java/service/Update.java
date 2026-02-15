@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -96,8 +97,8 @@ public final class Update {
 		}
 	}
 
-	private static void handleUpdateAll(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper, File file)
-			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+	private static void handleUpdateAll(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper,
+			File file) throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		handleUpdateName(ops, sc, id, mapper, file);
 		handleUpdateMail(ops, sc, id, mapper, file);
 		handleUpdateAddress(ops, sc, id, mapper, file);
@@ -105,8 +106,8 @@ public final class Update {
 		handleUpdateRole(ops, sc, id, mapper, file);
 	}
 
-	private static void handleUpdateName(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper, File file)
-			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+	private static void handleUpdateName(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper,
+			File file) throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		while (true) {
 			try {
 				System.out.print("New name: ");
@@ -124,8 +125,8 @@ public final class Update {
 		return;
 	}
 
-	private static void handleUpdateMail(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper, File file)
-			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
+	private static void handleUpdateMail(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper,
+			File file) throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 		while (true) {
 			try {
 				System.out.print("New mail: ");
@@ -181,8 +182,8 @@ public final class Update {
 		return;
 	}
 
-	private static void handleUpdateRole(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper, File file)
-			throws EmployeeNotFoundException, IdFormatWrongException {
+	private static void handleUpdateRole(CrudFileImplementation ops, Scanner sc, String id, ObjectMapper mapper,
+			File file) throws EmployeeNotFoundException, IdFormatWrongException {
 		while (true) {
 
 			System.out.println("1. Add role");
@@ -240,11 +241,6 @@ public final class Update {
 					try {
 						RoleChoice role = RoleChoice.valueOf(roleString);
 
-//						if (!ops.readOne(id).getRole().contains(role.toString())) {
-//							System.out.println("Cannot revoke a role that does not exist to the user");
-//							continue;
-//						}
-
 						ops.revokeRole(id, role.name());
 						System.out.println("Revoked role " + role + " to employee ID " + id);
 						SaveEmployeesToFile.saveToJson(mapper, file);
@@ -298,7 +294,7 @@ public final class Update {
 // -----------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------
 
-	public static void handleUpdateMenuDB(CrudDBImplementation dbops, Scanner sc, Connection conn) {
+	public static void handleUpdateMenuDB(CrudDBImplementation dbops, Scanner sc, Connection conn) throws SQLException{
 		try {
 
 			String targetId = null;
@@ -364,7 +360,8 @@ public final class Update {
 			}
 		} catch (Exception e) {
 			System.out.println("Error updating data.");
-			logger.warn("Error updating data.");
+			e.printStackTrace();
+			logger.error("Error updating data.");
 		}
 	}
 
@@ -382,10 +379,15 @@ public final class Update {
 		System.out.print("New name: ");
 		String name = sc.nextLine();
 		ValidateName.validateName(name);
-		dbops.updateNameDB(id, name);
-//		System.out.println("Updated name for employee ID "+id+" : "+name);
-		Read.handleReadOneDB(dbops, conn, id);
-		logger.info("Updated name for employee ID {}: {}", id, name);
+		boolean updated = dbops.updateNameDB(id, name);
+		if (updated) {
+			Read.handleReadOneDB(dbops, conn, id);
+			logger.info("Updated name for employee ID {}: {}", id, name);
+			System.out.println("Updated name for employee ID " + id + " : " + name);
+		} else {
+			logger.info("Could not update name for employee ID {}", id);
+			System.out.println("Could not update name for employee ID " + id);
+		}
 		return;
 	}
 
@@ -394,10 +396,15 @@ public final class Update {
 		System.out.print("New mail: ");
 		String mail = sc.nextLine();
 		ValidateMail.validateMail(mail);
-		dbops.updateMailDB(id, mail);
-//		System.out.println("Updated mail for employee ID "+id+" : "+mail);
-		Read.handleReadOneDB(dbops, conn, id);
-		logger.info("Updated mail for employee ID {}: {}", id, mail);
+		boolean updated = dbops.updateMailDB(id, mail);
+		if (updated) {
+			Read.handleReadOneDB(dbops, conn, id);
+			logger.info("Updated mail for employee ID {}: {}", id, mail);
+			System.out.println("Updated mail for employee ID " + id + " : " + mail);
+		} else {
+			logger.info("Could not update mail for employee ID {}", id);
+			System.out.println("Could not update mail for employee ID " + id);
+		}
 		return;
 	}
 
@@ -406,10 +413,15 @@ public final class Update {
 		System.out.print("New address: ");
 		String address = sc.nextLine();
 		ValidateAddress.validateAddress(address);
-		dbops.updateAddressDB(id, address);
-//		System.out.println("Updated address for employee ID "+id+" : "+address);
-		Read.handleReadOneDB(dbops, conn, id);
-		logger.info("Updated address for employee ID {}: {}", id, address);
+		boolean updated = dbops.updateAddressDB(id, address);
+		if (updated) {
+			Read.handleReadOneDB(dbops, conn, id);
+			logger.info("Updated address for employee ID {}: {}", id, address);
+			System.out.println("Updated address for employee ID " + id + " : " + address);
+		} else {
+			logger.info("Could not update address for employee ID {}", id);
+			System.out.println("Could not update address for employee ID " + id);
+		}
 		return;
 	}
 
@@ -418,90 +430,98 @@ public final class Update {
 		System.out.print("New department: ");
 		String department = sc.nextLine();
 		ValidateDepartment.validateDepartment(department);
-		dbops.updateDepartmentDB(id, department);
-//		System.out.println("Updated department for employee ID "+id+" : "+department);
-		Read.handleReadOneDB(dbops, conn, id);
-		logger.info("Updated department for employee ID {}: {}", id, department);
+		boolean updated = dbops.updateDepartmentDB(id, department);
+		if (updated) {
+			Read.handleReadOneDB(dbops, conn, id);
+			logger.info("Updated department for employee ID {}: {}", id, department);
+			System.out.println("Updated department for employee ID " + id + " : " + department);
+		} else {
+			logger.info("Could not update department for employee ID {}", id);
+			System.out.println("Could not update department for employee ID " + id);
+		}
 		return;
 	}
 
 	public static void handleUpdateRoleDB(CrudDBImplementation dbops, Scanner sc, String id, Connection conn)
-			throws EmployeeNotFoundException, IdFormatWrongException, SQLException {
+			throws SQLException, EmployeeNotFoundException, IdFormatWrongException {
 
-		while (true) {
-			System.out.println("Enter 1 to Add role");
-			System.out.println("Enter 2 to Revoke role");
-			System.out.println("Your choice: ");
-			int ch;
+		System.out.println("Enter 1 to Add role");
+		System.out.println("Enter 2 to Revoke role");
+		System.out.print("Your choice: ");
+
+		int ch;
+		try {
+			ch = sc.nextInt();
+			sc.nextLine();
+		} catch (Exception e) {
+			sc.nextLine();
+			System.out.println("Invalid input.");
+			return;
+		}
+
+		if (ch == 1) {
+
+			for (RoleChoice r : RoleChoice.values()) {
+				System.out.println(r);
+			}
+
+			System.out.print("Your choice: ");
+			String roleInput = sc.nextLine().toUpperCase();
 
 			try {
-				ch = sc.nextInt();
-				sc.nextLine();
-			} catch (Exception e) {
-				sc.nextLine();
-				System.out.println("Invalid input.");
-				continue;
+				RoleChoice role = RoleChoice.valueOf(roleInput);
+
+				boolean added = dbops.addRoleDB(id, role.name());
+
+				if (added) {
+					Read.handleReadOneDB(dbops, conn, id);
+					System.out.println("Added role " + role + " successfully.");
+				} else {
+					System.out.println("Cannot add role (inactive employee or duplicate role).");
+				}
+
+			} catch (IllegalArgumentException e) {
+				System.out.println("Invalid role.");
 			}
+		}
 
-			if (ch == 1) {
+		else if (ch == 2) {
 
-				while (true) {
-					for (RoleChoice r : RoleChoice.values()) {
-						System.out.println(r);
-					}
+//			List<String> existingRoles = dbops.readRolesDB(id);
+			List<String> existingRoles = LoginAndAccess.fetchRoles(conn,id);
 
-					System.out.println("Your choice: ");
-					String roleString = sc.nextLine().toUpperCase();
-
-					try {
-						RoleChoice role = RoleChoice.valueOf(roleString);
-
-						if (dbops.readOneDB(id).getRole().contains(role.toString())) {
-							System.out.println("Role already exists");
-						}
-						dbops.addRoleDB(id, role.name());
-//						System.out.println("Added role "+role+" from employee ID "+id);
-						Read.handleReadOneDB(dbops, conn, id);
-						logger.info("Added role {} to employee ID {}", role, id);
-						return;
-					} catch (IllegalArgumentException e) {
-						System.out.println("Invalid role. Try again.");
-					}
-				}
-
-			} else if (ch == 2) {
-				while (true) {
-
-					System.out.println("Existing roles: ");
-					for (RoleChoice r : RoleChoice.values()) {
-						System.out.println(r);
-					}
-					System.out.println("Select a role to revoke Your choice: ");
-					for (String s : dbops.readOneDB(id).getRole()) {
-						System.out.println(s);
-					}
-					String roleString = sc.nextLine().toUpperCase();
-
-					try {
-						RoleChoice role = RoleChoice.valueOf(roleString);
-
-//						if (!ops.readOneDB(id).getRole().contains(role.toString())) {
-//							System.out.println("Cannot revoke a role that does not exist to the user");
-//						}
-
-						dbops.revokeRoleDB(id, role.name());
-						Read.handleReadOneDB(dbops, conn, id);
-						logger.info("Revoked role {} from employee ID {}", role, id);
-						return;
-					} catch (IllegalArgumentException e) {
-						System.out.println("Invalid role. Try again.");
-					}
-				}
-			} else {
-				System.out.println("Invalid choice");
-				logger.warn("Invalid choice");
+			if (existingRoles.isEmpty()) {
+				System.out.println("Employee has no roles to revoke.");
 				return;
 			}
+
+			System.out.println("Existing roles: " + existingRoles);
+			System.out.print("Enter role to revoke: ");
+			String roleInput = sc.nextLine().toUpperCase();
+
+			try {
+				RoleChoice role = RoleChoice.valueOf(roleInput);
+
+				boolean revoked = dbops.revokeRoleDB(id, role.name());
+
+				if (revoked) {
+					Read.handleReadOneDB(dbops, conn, id);
+					System.out.println("Revoked role " + role + " successfully.");
+				} else {
+					System.out.println("Role not active or cannot revoke.");
+				}
+
+			} catch (IllegalArgumentException e) {
+				System.out.println("Invalid role.");
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}
+
+		else {
+			System.out.println("Invalid choice.");
 		}
 	}
 

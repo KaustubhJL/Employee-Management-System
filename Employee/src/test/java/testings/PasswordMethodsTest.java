@@ -20,7 +20,7 @@ class PasswordMethodsTest {
 	@Test
 	void testSetAndGetLoginContext() {
 		LoginAndAccess.setLoginContext("TT25001", List.of("Admin", "Manager"));
-		assertEquals("TT25001",LoginAndAccess.getLoggedInId());
+		assertEquals("TT25001", LoginAndAccess.getLoggedInId());
 		assertTrue(LoginAndAccess.hasRole("Admin"));
 		assertTrue(LoginAndAccess.hasRole("Manager"));
 		assertFalse(LoginAndAccess.hasRole("Employee"));

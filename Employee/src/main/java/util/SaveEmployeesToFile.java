@@ -10,7 +10,7 @@ import dao.EmployeeListOps;
 import model.Employee;
 
 public class SaveEmployeesToFile {
-	public static void saveToJson( ObjectMapper objectMapper, File file) {
+	public static void saveToJson(ObjectMapper objectMapper, File file) {
 		try {
 			List<Employee> employeeList = EmployeeListOps.findAll();
 			objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, employeeList);

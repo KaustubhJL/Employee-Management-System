@@ -1,4 +1,5 @@
 package model;
+
 //constructor
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,11 +74,11 @@ public class Employee {
 	}
 
 	public void addRole(String role) {
-		 if (role != null && !this.role.contains(role)) {
-	            this.role.add(role);
-	        }
+		if (role != null && !this.role.contains(role)) {
+			this.role.add(role);
+		}
 	}
-	
+
 	public void removeRole(String role) {
 		this.role.remove(role);
 	}
@@ -85,19 +86,16 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	 
+
 	public String toString() {
-	    String details = "Details: Id: " + id
-	                   + " Name: " + name
-	                   + " Mail:" + mail
-	                   + " Address:" + address
-	                   + " Department:" + department;
+		String details = "Details: Id: " + id + " Name: " + name + " Mail:" + mail + " Address:" + address
+				+ " Department:" + department;
 
-	    if (role != null && !role.isEmpty()) {
-	        details += " Role:" + role;
-	    }
+		if (role != null && !role.isEmpty()) {
+			details += " Role:" + role;
+		}
 
-	    return details;
+		return details;
 	}
 
 }

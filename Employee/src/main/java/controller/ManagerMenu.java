@@ -20,7 +20,10 @@ import util.SaveEmployeesToFile;
 
 public class ManagerMenu {
 	private static final Logger logger = LoggerFactory.getLogger(ManagerMenu.class);
-	private ManagerMenu() {}
+
+	private ManagerMenu() {
+	}
+
 	public static void showMenu(CrudFileImplementation ops, Scanner sc, ObjectMapper mapper, File file) {
 
 		ManagerChoices choice = null;
@@ -51,16 +54,16 @@ public class ManagerMenu {
 					break;
 
 				case MY_DETAILS:
-					System.out.println(Read.handleReadOne(ops,LoginAndAccess.getLoggedInId()));
+					System.out.println(Read.handleReadOne(ops, LoginAndAccess.getLoggedInId()));
 					break;
 
 				case CHANGE_PASSWORD:
 					PasswordMethods.updatePassword(ops, sc);
-					SaveEmployeesToFile.saveToJson( mapper, file);
+					SaveEmployeesToFile.saveToJson(mapper, file);
 					break;
 
 				case EXIT:
-					SaveEmployeesToFile.saveToJson( mapper, file);
+					SaveEmployeesToFile.saveToJson(mapper, file);
 					System.out.println("Manager logged out.");
 					logger.info("Manager {} logged out", LoginAndAccess.getLoggedInId());
 					LoginAndAccess.clearLoginContext();
@@ -76,11 +79,9 @@ public class ManagerMenu {
 
 		} while (choice != ManagerChoices.EXIT);
 	}
-	
-	
+
 //	------------------------------------------------------------------------------------------------
-	
-	
+
 	public static void showDBMenu(CrudDBImplementation dbops, Scanner sc, Connection conn) {
 
 		ManagerChoices choice = null;
@@ -119,7 +120,7 @@ public class ManagerMenu {
 					break;
 
 				case EXIT:
-					conn=null;
+					conn = null;
 					System.out.println("Manager logged out.");
 					logger.info("Manager {} logged out", LoginAndAccess.getLoggedInId());
 					LoginAndAccess.clearLoginContext();

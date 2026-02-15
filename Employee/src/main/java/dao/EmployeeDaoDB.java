@@ -11,22 +11,22 @@ import model.Employee;
 public interface EmployeeDaoDB {
 	String addDB(String name, String mail, String address, String department, RoleChoice role) throws SQLException;
 
-	void updateNameDB(String id, String name) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean updateNameDB(String id, String name) throws SQLException;
 
-	void updateMailDB(String id, String mail) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean updateMailDB(String id, String mail) throws SQLException;
 
-	void updateDepartmentDB(String id, String department) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean updateDepartmentDB(String id, String department) throws SQLException;
 
-	void updateAddressDB(String id, String address) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean updateAddressDB(String id, String address) throws SQLException;
 
-	void addRoleDB(String id, String role) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean addRoleDB(String id, String role) throws SQLException;
 
-	void deleteDB(String id) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean deleteDB(String id) throws SQLException;
 
-	void updatePasswordDB(String id, String password) throws EmployeeNotFoundException, IdFormatWrongException;
+	boolean updatePasswordDB(String id, String password) throws SQLException;
 
-	void revokeRoleDB(String id, String role) throws EmployeeNotFoundException, IdFormatWrongException;
-
+	boolean revokeRoleDB(String id, String role) throws SQLException;
+	
 	List<Employee> readAllDB() throws EmployeeNotFoundException, IdFormatWrongException, SQLException;
 
 	Employee readOneDB(String id) throws EmployeeNotFoundException, IdFormatWrongException, SQLException;

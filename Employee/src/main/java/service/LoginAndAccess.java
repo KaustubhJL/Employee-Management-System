@@ -4,6 +4,7 @@ import java.io.Console;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +14,8 @@ import java.util.Scanner;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import customExceptions.MaxLoginAttemptsExceededException;
 import dao.CrudFileImplementation;
 import dao.EmployeeListOps;
 import model.Employee;
@@ -24,8 +27,9 @@ public class LoginAndAccess {
 
 	private LoginAndAccess() {
 	}
-	//------------------------------------------------------------------------------------------------------- 
 	
+	// -------------------------------------------------------------------------------------------------------
+
 	public static void setLoginContext(String empID, List<String> roles) {
 		loggedInID = empID;
 		loggedInRoles.clear();
@@ -45,21 +49,20 @@ public class LoginAndAccess {
 	public static boolean hasRole(String role) {
 		return loggedInRoles.stream().anyMatch(r -> r.equalsIgnoreCase(role));
 	}
-	
 
 	public static void clearLoginContext() {
-		loggedInID=null;
+		loggedInID = null;
 		loggedInRoles.clear();
 	}
-	//----------------------------------------------------------------------------------------------------
-	
+	// ----------------------------------------------------------------------------------------------------
+
 	public static void authenticateInFile(CrudFileImplementation ops, Scanner sc) {
 
 		Console console = System.console();
-		int attempts=0;
-		final int max_attempts=3;
+		int attempts = 0;
+		final int max_attempts = 3;
 
-		while (attempts<max_attempts) {
+		while (attempts < max_attempts) {
 			System.out.print("ID: ");
 			String id = sc.nextLine();
 			char[] passChars;
@@ -77,45 +80,41 @@ public class LoginAndAccess {
 
 			if (emp != null) {
 				setLoginContext(emp.getId(), emp.getRole());
-				System.out.println("Login successful. Employee ID: "+emp.getId()+", Role: "+emp.getRole());
+				System.out.println("Login successful. Employee ID: " + emp.getId() + ", Role: " + emp.getRole());
 				logger.info("Login successful. Employee ID: {}, Role: {}", emp.getId(), emp.getRole());
 				return;
 			}
 			attempts++;
 		}
-	    System.out.println("Maximum login attempts exceeded. Exiting program.");
-	    logger.error("Exiting program. Max login attempts reached.");
-	    System.exit(0);
+		logger.error("Maximum login attempts exceeded.");
+		throw new MaxLoginAttemptsExceededException("Maximum login attempts exceeded.");
 	}
 
-	
 	private static Employee accessCheckFile(CrudFileImplementation ops, String empID, String pass) {
 		for (Employee e : EmployeeListOps.findAll()) {
 			if (e.getId().equals(empID)) {
-				if(BCrypt.checkpw(pass, e.getPassword())) {
-				return e;
-				}
-				else {
+				if (BCrypt.checkpw(pass, e.getPassword())) {
+					return e;
+				} else {
 					System.out.println("Invalid password. Please try again.");
 					logger.warn("Invalid password. Please try again.");
-		                return null;
+					return null;
 				}
 			}
 		}
 		logger.warn("Invalid Employee ID. Please try again.");
-		System.out.println("Inavlid Employee ID. Please try again");
+		System.out.println("Invalid Employee ID. Please try again");
 		return null;
 	}
-	
-	
-	//------------------------------------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------------------------------------
 
 	public static boolean authenticateInDB(Connection conn, Scanner sc) {
-		
+
 		int attempts = 0;
-	    final int max_attempts = 3;
-	    
-		while (attempts<max_attempts) {
+		final int max_attempts = 3;
+
+		while (attempts < max_attempts) {
 			System.out.print("Enter Your ID: ");
 			String empId = sc.nextLine();
 
@@ -156,17 +155,15 @@ public class LoginAndAccess {
 				logger.warn("Login Failed. " + e.getMessage());
 			}
 		}
-		System.out.println("Maximum login attempts exceeded. Exiting program.");
-		logger.error("Maximum login attempts exceeded. Exiting program.");
-		System.exit(0);
-		return false;
+		logger.error("Maximum login attempts exceeded.");
+		throw new MaxLoginAttemptsExceededException("Maximum login attempts exceeded.");
 	}
 
-	private static List<String> fetchRoles(Connection conn, String empId) throws Exception {
+	static List<String> fetchRoles(Connection conn, String empId) throws SQLException {
 
 		List<String> roles = new ArrayList<>();
 
-		String roleQuery = "SELECT r.role FROM roles r INNER JOIN employees e on r.empid=e.empid WHERE r.empid = ? AND e.active IS TRUE";
+		String roleQuery = "SELECT role FROM roles WHERE empid = ? AND active IS TRUE";
 		PreparedStatement ps = conn.prepareStatement(roleQuery);
 		ps.setString(1, empId);
 

@@ -17,7 +17,6 @@ import util.ValidateId;
 
 public class Read {
 
-
 	private static final Logger logger = LoggerFactory.getLogger(Read.class);
 
 	public static List<Employee> handleReadAll(CrudFileImplementation ops) throws EmployeeNotFoundException {

@@ -41,14 +41,14 @@ public class Delete {
 			}
 			ops.delete(id);
 			SaveEmployeesToFile.saveToJson(mapper, file);
-			System.out.println("Employee "+ id +" has been deleted successfully.");
+			System.out.println("Employee " + id + " has been deleted successfully.");
 			logger.info("Employee {} has been deleted successfully.", id);
 		} catch (Exception e) {
 			logger.warn("Error deleting employee: {}", e.getMessage(), e);
 		}
 	}
-	
-	//----------------------------------------------------------------------------------------------------
+
+	// ----------------------------------------------------------------------------------------------------
 
 	public static void handleDeleteDB(CrudDBImplementation dbops, Scanner sc, Connection conn) {
 		try {
@@ -68,12 +68,20 @@ public class Delete {
 				System.out.println("Deletion cancelled.");
 				return;
 			}
-			dbops.deleteDB(id);
+			boolean deleted = dbops.deleteDB(id);
+
+			if (deleted) {
+				logger.info("Employee {} has been deleted successfully.", id);
+				System.out.println("Employee " + id + " deleted successfully.");
+			} else {
+				System.out.println("No employee found with ID: " + id);
+			}
 //			System.out.println("Employee "+ id +" has been deleted successfully.");
-			logger.info("Employee {} has been deleted successfully.", id);
+//			logger.info("Employee {} has been deleted successfully.", id);
 
 		} catch (Exception e) {
 			logger.warn("Error deleting employee: {}", e.getMessage(), e);
+			 System.out.println("Error deleting employee: " + e.getMessage());
 		}
 	}
 }

@@ -31,7 +31,8 @@ import util.ValidateName;
 public class Create {
 	private static final Logger logger = LoggerFactory.getLogger(Create.class);
 
-	public static void handleAdd(CrudFileImplementation ops, Scanner sc, ObjectMapper mapper, File file) throws InvalidDataException{
+	public static void handleAdd(CrudFileImplementation ops, Scanner sc, ObjectMapper mapper, File file)
+			throws InvalidDataException {
 
 		String name;
 		String mail;
@@ -39,65 +40,64 @@ public class Create {
 		String department;
 		RoleChoice choice;
 
-			while (true) {
-				try {
-					System.out.print("Enter name: ");
-					name = sc.nextLine();
-					ValidateName.validateName(name);
-					break;
-				} catch (InvalidDataException e) {
-					System.out.println(e.getMessage());
-				}
+		while (true) {
+			try {
+				System.out.print("Enter name: ");
+				name = sc.nextLine();
+				ValidateName.validateName(name);
+				break;
+			} catch (InvalidDataException e) {
+				System.out.println(e.getMessage());
 			}
+		}
 
-			while (true) {
-				try {
-					System.out.print("Enter mail: ");
-					mail = sc.nextLine();
-					ValidateMail.validateMail(mail);
-					break;
-				} catch (InvalidDataException e) {
-					System.out.println(e.getMessage());
-				}
+		while (true) {
+			try {
+				System.out.print("Enter mail: ");
+				mail = sc.nextLine();
+				ValidateMail.validateMail(mail);
+				break;
+			} catch (InvalidDataException e) {
+				System.out.println(e.getMessage());
 			}
+		}
 
-			while (true) {
-				try {
-					System.out.print("Enter address: ");
-					address = sc.nextLine();
-					ValidateAddress.validateAddress(address);
-					break;
-				} catch (InvalidDataException e) {
-					System.out.println(e.getMessage());
-				}
+		while (true) {
+			try {
+				System.out.print("Enter address: ");
+				address = sc.nextLine();
+				ValidateAddress.validateAddress(address);
+				break;
+			} catch (InvalidDataException e) {
+				System.out.println(e.getMessage());
 			}
+		}
 
-			while (true) {
-				try {
-					System.out.print("Enter department: ");
-					department = sc.nextLine();
-					ValidateDepartment.validateDepartment(department);
-					break;
-				} catch (InvalidDataException e) {
-					System.out.println(e.getMessage());
-				}
+		while (true) {
+			try {
+				System.out.print("Enter department: ");
+				department = sc.nextLine();
+				ValidateDepartment.validateDepartment(department);
+				break;
+			} catch (InvalidDataException e) {
+				System.out.println(e.getMessage());
 			}
+		}
 
-			while (true) {
-				try {
+		while (true) {
+			try {
 				System.out.println("Choose a role:");
 				for (RoleChoice r : RoleChoice.values()) {
 					System.out.println(r);
 				}
 				choice = RoleChoice.valueOf(sc.nextLine().toUpperCase());
 				break;
-			}catch(IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				System.out.println("Invalid Role. Please try again.");
 			}
-			}
-			
-			
-			try {
+		}
+
+		try {
 			ArrayList<String> role = new ArrayList<>();
 			role.add(choice.name().charAt(0) + choice.name().substring(1).toLowerCase());
 
@@ -118,7 +118,7 @@ public class Create {
 			logger.error("Error while adding employee", e);
 		}
 	}
-	
+
 //---------------------------------------------------------------------------------------------------------------------------	
 
 	public static void handleAddDB(CrudDBImplementation dbops, Scanner sc, Connection conn)

@@ -23,8 +23,9 @@ import service.Update;
 import util.SaveEmployeesToFile;
 
 public class AdminMenu {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AdminMenu.class);
+
 	private AdminMenu() {
 	}
 
@@ -146,16 +147,17 @@ public class AdminMenu {
 
 				case SHOW_ALL:
 //					ops.showAll().forEach(System.out::println);
-					Read.handleReadAllDB(dbops,conn).forEach(System.out::println);
+					Read.handleReadAllDB(dbops, conn).forEach(System.out::println);
 					break;
 
 				case MY_DETAILS:
 //					System.out.println(ops.showSelf(PasswordMethods.getLoggedInId()));
 					System.out.println(Read.handleReadOneDB(dbops, conn, LoginAndAccess.getLoggedInId()));
 					break;
-					
+
 				case INACTIVE_USERS:
-					Read.handleReadInactiveDB(dbops, conn).forEach(System.out::println);;
+					Read.handleReadInactiveDB(dbops, conn).forEach(System.out::println);
+					;
 					break;
 
 				case CHANGE_PASSWORD:
@@ -167,10 +169,9 @@ public class AdminMenu {
 					break;
 
 				case EXIT:
-					conn=null;
 					System.out.println("Admin logged out.");
 					logger.info("Admin {} logged out.", LoginAndAccess.getLoggedInId());
-					LoginAndAccess.clearLoginContext();
+//					LoginAndAccess.clearLoginContext();
 					break;
 
 				default:

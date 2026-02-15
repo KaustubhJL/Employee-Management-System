@@ -15,13 +15,12 @@ public class SetNextID {
 			int num = Integer.parseInt(id.substring(4));
 			int idYear = Integer.parseInt(id.substring(2, 4));
 			if (idYear == currentYear) {
-	            max = Math.max(max, num);
-	        }
-			else {
-				max=000;
+				max = Math.max(max, num);
+			} else {
+				max = 000;
 			}
 		}
-		 int next = max + 1;
-		 return "TT" + currentYear + String.format("%03d", next);
+		int next = max + 1;
+		return "TT" + currentYear + String.format("%03d", next);
 	}
 }
