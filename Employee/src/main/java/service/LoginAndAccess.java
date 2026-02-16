@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import customExceptions.MaxLoginAttemptsExceededException;
 import dao.CrudFileImplementation;
-import dao.EmployeeListOps;
+//import dao.EmployeeListOps;
+//import dao.CrudFileImplementation;
 import model.Employee;
 
 public class LoginAndAccess {
@@ -76,7 +77,7 @@ public class LoginAndAccess {
 			String pass = new String(passChars);
 			Arrays.fill(passChars, '\0');
 
-			Employee emp = accessCheckFile(ops, id, pass);
+			Employee emp = loginCheckFile(ops, id, pass);
 
 			if (emp != null) {
 				setLoginContext(emp.getId(), emp.getRole());
@@ -89,9 +90,11 @@ public class LoginAndAccess {
 		logger.error("Maximum login attempts exceeded.");
 		throw new MaxLoginAttemptsExceededException("Maximum login attempts exceeded.");
 	}
+	
 
-	private static Employee accessCheckFile(CrudFileImplementation ops, String empID, String pass) {
-		for (Employee e : EmployeeListOps.findAll()) {
+	private static Employee loginCheckFile(CrudFileImplementation ops, String empID, String pass) {
+		
+		for (Employee e : CrudFileImplementation.findAll()) {
 			if (e.getId().equals(empID)) {
 				if (BCrypt.checkpw(pass, e.getPassword())) {
 					return e;
@@ -159,6 +162,7 @@ public class LoginAndAccess {
 		throw new MaxLoginAttemptsExceededException("Maximum login attempts exceeded.");
 	}
 
+	
 	static List<String> fetchRoles(Connection conn, String empId) throws SQLException {
 
 		List<String> roles = new ArrayList<>();

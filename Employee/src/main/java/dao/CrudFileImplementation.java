@@ -13,77 +13,127 @@ import util.ValidateId;
 
 public class CrudFileImplementation implements EmployeeDaoFile {
 
+	private static final List<Employee> employees = java.util.Collections.synchronizedList(new ArrayList<>());
+
+	public void setEmployees(List<Employee> list) {
+		employees.clear();
+		employees.addAll(list);
+	}
+
+	public static List<Employee> findAll() {
+		return new ArrayList<>(employees);
+	}
+
+	public static Employee findById(String id) {
+		for (Employee e : employees) {
+			if (e.getId().equals(id)) {
+				return e;
+			}
+		}
+		return null;
+	}
+
+	public boolean checkEmpty() {
+		return employees.isEmpty();
+	}
+
+//---------------------------------------------------------------------------------------------------	
+
 	public boolean employeeExists(String id) throws IdFormatWrongException {
 		ValidateId.validateId(id);
-		return EmployeeListOps.findById(id) != null;
+		return findById(id) != null;
 	}
 
 	public Employee add(String name, String mail, String address, String department, ArrayList<String> role,
 			String password) throws InvalidDataException {
 
-		String id = SetNextID.generateNextId(EmployeeListOps.findAll());
+		String id = SetNextID.generateNextId(findAll());
 		String hashedPassword = PasswordMethods.hash(password);
 
 		Employee emp = new Employee(id, name, mail, address, department, role, hashedPassword);
-		EmployeeListOps.add(emp);
+		employees.add(emp);
 		return emp;
 	}
 
 	public void delete(String id) throws EmployeeNotFoundException, IdFormatWrongException {
-		ValidateId.validateId(id);
 
-		Employee emp = EmployeeListOps.findById(id);
+		Employee emp = findById(id);
 		if (emp == null)
 			throw new EmployeeNotFoundException("Employee not found");
-
-		EmployeeListOps.delete(emp);
+		employees.remove(emp);
 	}
 
 	public List<Employee> readAll() throws EmployeeNotFoundException {
-		return EmployeeListOps.findAll();
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		return findAll();
 	}
 
-	public Employee readOne(String id) throws EmployeeNotFoundException {
-		return EmployeeListOps.findById(id);
+	public Employee readOne(String id) throws EmployeeNotFoundException, IdFormatWrongException {
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		return findById(id);
 	}
 
 	public void updateName(String id, String name)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
-		EmployeeListOps.findById(id).setName(name);
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).setName(name);
 
 	}
 
 	public void updateMail(String id, String mail)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
-		EmployeeListOps.findById(id).setMail(mail);
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).setMail(mail);
 
 	}
 
 	public void updateAddress(String id, String address)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
-		EmployeeListOps.findById(id).setAddress(address);
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).setAddress(address);
 
 	}
 
 	public void updateDepartment(String id, String department)
 			throws EmployeeNotFoundException, IdFormatWrongException {
-		EmployeeListOps.findById(id).setDepartment(department);
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).setDepartment(department);
 
 	}
 
 	public void updatePassword(String id, String newPassword)
 			throws InvalidDataException, IdFormatWrongException, EmployeeNotFoundException {
-
-		EmployeeListOps.findById(id).setPassword(PasswordMethods.hash(newPassword));
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).setPassword(PasswordMethods.hash(newPassword));
 	}
 
 	public void addRole(String id, String role) throws EmployeeNotFoundException, IdFormatWrongException {
-		EmployeeListOps.findById(id).addRole(role);
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).addRole(role);
 
 	}
 
 	public void revokeRole(String id, String role) throws EmployeeNotFoundException, IdFormatWrongException {
-		EmployeeListOps.findById(id).removeRole(role);
+		if (checkEmpty()) {
+			throw new EmployeeNotFoundException("No existing employees");
+		}
+		findById(id).removeRole(role);
 
 	}
 }

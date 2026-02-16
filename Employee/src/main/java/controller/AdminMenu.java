@@ -171,7 +171,7 @@ public class AdminMenu {
 				case EXIT:
 					System.out.println("Admin logged out.");
 					logger.info("Admin {} logged out.", LoginAndAccess.getLoggedInId());
-//					LoginAndAccess.clearLoginContext();
+					LoginAndAccess.clearLoginContext();
 					break;
 
 				default:

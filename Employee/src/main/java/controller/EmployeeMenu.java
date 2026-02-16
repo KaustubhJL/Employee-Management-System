@@ -110,7 +110,6 @@ public class EmployeeMenu {
 					break;
 
 				case EXIT:
-					conn = null;
 					System.out.println("Employee logged out.");
 					logger.info("Employee {} logged out.", LoginAndAccess.getLoggedInId());
 					LoginAndAccess.clearLoginContext();

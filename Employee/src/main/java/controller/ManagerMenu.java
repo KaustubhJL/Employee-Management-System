@@ -120,7 +120,6 @@ public class ManagerMenu {
 					break;
 
 				case EXIT:
-					conn = null;
 					System.out.println("Manager logged out.");
 					logger.info("Manager {} logged out", LoginAndAccess.getLoggedInId());
 					LoginAndAccess.clearLoginContext();

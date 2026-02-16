@@ -17,7 +17,6 @@ import customExceptions.IdFormatWrongException;
 import customExceptions.InvalidDataException;
 import dao.CrudDBImplementation;
 import dao.CrudFileImplementation;
-import dao.EmployeeListOps;
 import enums.RoleChoice;
 import util.SaveEmployeesToFile;
 import util.ValidateAddress;
@@ -34,7 +33,7 @@ public final class Update {
 	public static void handleUpdateMenu(CrudFileImplementation ops, Scanner sc, ObjectMapper mapper, File file)
 			throws EmployeeNotFoundException, IdFormatWrongException, InvalidDataException {
 
-		if (EmployeeListOps.isEmpty()) {
+		if (ops.checkEmpty()) {
 			logger.warn("There are no employees at the moment, add data first.");
 			System.out.println("Add data before updation");
 			return;
@@ -214,10 +213,10 @@ public final class Update {
 					try {
 						RoleChoice role = RoleChoice.valueOf(roleString);
 
-						if (ops.readOne(id).getRole().contains(role.toString())) {
+						if (ops.readOne(id).getRole().contains(role.name())) {
 							System.out.println("Role already exists");
+							continue;
 						}
-
 						ops.addRole(id, role.name());
 						System.out.println("Added role " + role + " to employee ID " + id);
 						SaveEmployeesToFile.saveToJson(mapper, file);
@@ -241,7 +240,12 @@ public final class Update {
 					try {
 						RoleChoice role = RoleChoice.valueOf(roleString);
 
-						ops.revokeRole(id, role.name());
+//						ops.revokeRole(id, role.name());
+						if (!ops.readOne(id).getRole().contains(role.name())) {
+						    System.out.println("Role not assigned to employee.");
+						    continue;
+						}
+						
 						System.out.println("Revoked role " + role + " to employee ID " + id);
 						SaveEmployeesToFile.saveToJson(mapper, file);
 						logger.info("Revoked role {} from employee ID {}", role, id);
@@ -487,7 +491,6 @@ public final class Update {
 
 		else if (ch == 2) {
 
-//			List<String> existingRoles = dbops.readRolesDB(id);
 			List<String> existingRoles = LoginAndAccess.fetchRoles(conn,id);
 
 			if (existingRoles.isEmpty()) {

@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import customExceptions.MaxLoginAttemptsExceededException;
 import dao.CrudDBImplementation;
 import dao.CrudFileImplementation;
-import dao.EmployeeListOps;
 import enums.ChooseBackend;
 import model.Employee;
 import util.MakeConnection;
@@ -74,7 +73,7 @@ public class MainMenu {
 			if (file.exists() && file.length() > 0) {
 				List<Employee> list = mapper.readValue(file, new TypeReference<List<Employee>>() {
 				});
-				EmployeeListOps.setEmployees(list);
+				fops.setEmployees(list);
 			}
 
 			LoginAndAccess.authenticateInFile(fops, sc);
